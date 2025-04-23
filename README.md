@@ -1,4 +1,4 @@
-# 📝 Calculadora de IMC com Flask
+#📝 Calculadora de IMC com Flask
 
 Este é um aplicativo simples e interativo para calcular o Índice de Massa Corporal (**IMC**) de usuários, desenvolvido com a biblioteca Flask. Ele permite que o usuário insira seu peso e altura e, com base nesses dados, exibe o valor do IMC, a categoria correspondente e recomendações personalizadas (alimentação, exercícios e cuidados médicos).
 
@@ -6,7 +6,7 @@ O propósito deste projeto é servir como um exemplo prático para aprender Flas
 
 ---
 
-## 📋 Funcionalidades
+##📋 Funcionalidades
 
 - Exibe um formulário para inserção de **nome**, **peso** e **altura**.
 - Calcula o Índice de Massa Corporal (IMC) do usuário.
@@ -60,7 +60,7 @@ As categorias e faixas disponíveis no aplicativo são:
 Um guia rápido para os arquivos e diretórios do projeto:
 
 ```
-/meu_app_imc              # Diretório raiz do projeto
+/Project_IMC              # Diretório raiz do projeto
 ├── /templates            # Diretório para templates HTML
 │   ├── index.html        # Página inicial do app (formulário de entrada)
 │   └── resultado.html    # Página de resultado do cálculo de IMC
