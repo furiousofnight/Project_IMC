@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados - FURIOUSOFNIGHT</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="/static/img/logo.png" alt="FURIOUSOFNIGHT Logo" style="width: 150px; display: block; margin: 0 auto;">
+            <h1>Seu IMC</h1>
+        </header>
+
+        <div class="result-container">
+            <h2>{{ resultado }}</h2>
+            <div class="result-box">
+                <p><strong>Categoria:</strong> {{ categoria }}</p>
+                <p><strong>Risco à Saúde:</strong> {{ risco_saude }}</p>
+                <p><strong>Recomendações Alimentares:</strong> {{ recomendacao_alimentos }}</p>
+                <p><strong>Recomendações de Exercício:</strong> {{ recomendacao_exercicio }}</p>
+                <p><strong>Cuidados Médicos:</strong> {{ recomendacao_medica }}</p>
+            </div>
+        </div>
+
+        <footer>
+            &copy; 2025 FURIOUSOFNIGHT | Criado com ❤️ e comprometimento pela equipe <span>FURIOUSOFNIGHT</span>.
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,175 @@
+/* Estilo Global */
+body {
+    font-family: "Montserrat", sans-serif;
+    background: linear-gradient(to right, #131a22, #17202a, #1c2833);
+    margin: 0;
+    padding: 0;
+    color: #fdfdfd;
+}
+
+.container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(12px);
+}
+
+/* Cabeçalho */
+header h1 {
+    font-size: 3.5rem;
+    color: #ffd700;
+    text-align: center;
+    margin: 10px 0;
+    text-shadow: 2px 3px rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+header p {
+    text-align: center;
+    font-size: 1.3rem;
+    color: #cccccc;
+}
+
+/* Formulário */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+form label {
+    font-weight: bold;
+    color: #ffd700;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+}
+
+form input {
+    padding: 15px;
+    border: 2px solid #444a53;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #202833;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+form input:focus {
+    border-color: #ffd700;
+    outline: none;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+form button {
+    padding: 15px;
+    background: linear-gradient(90deg, #ffd700, #ff8c00);
+    color: #202833;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+form button:hover {
+    transform: scale(1.08);
+    background: linear-gradient(90deg, #ff8c00, #ffd700);
+}
+
+/* Resultados */
+.result-container {
+    padding: 25px;
+    background: rgba(37, 47, 59, 0.8); /* Alterada para melhor contraste */
+    border-radius: 15px;
+    color: #f5f5f5;
+    margin-top: 30px;
+}
+
+.result-container h2 {
+    font-size: 2.2rem;
+    color: #ffa500; /* Tom mais moderado que o amarelo puro */
+    margin-bottom: 15px;
+    text-align: center;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.result-container p {
+    font-size: 1.2rem;
+    margin: 12px 0;
+    line-height: 1.6;
+    color: #cccccc;
+}
+
+.result-box {
+    background: rgba(50, 61, 75, 0.9); /* Alterado para consistência */
+    padding: 20px 25px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    color: #e6e6e6; /* Letra mais suave */
+    margin-top: 20px;
+}
+
+/* Mensagens de Erro */
+.error {
+    background: #e63946; /* Vermelho mais moderno */
+    color: white;
+    border-radius: 12px;
+    padding: 15px 20px;
+    text-align: center;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin-bottom: 30px;
+    animation: fadeIn 1s ease;
+}
+
+/* Animações */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-6px); }
+    80% { transform: translateX(6px); }
+    100% { transform: translateX(0); }
+}
+
+/* Rodapé */
+footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 1rem;
+    color: #cccccc;
+}
+
+footer span {
+    font-weight: bold;
+    color: #ffa500; /* Alterado para consistência */
+    text-transform: uppercase;
+}
+
+footer a {
+    color: #ffa500;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer a:hover {
+    text-decoration: underline;
+    color: #ff8c00;
+}

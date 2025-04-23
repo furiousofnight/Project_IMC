@@ -1,0 +1,14 @@
+/Project_IMC
+├── /templates
+│   ├── index.html
+│   ├── resultado.html
+├── /static
+│   ├── /css
+│   │   └── styles.css
+│   ├── /img
+│   │   └── logo.png
+├── app.py
+├── requirements.txt
+├── README.md
+├── Dockerfile
+├── fly.toml
