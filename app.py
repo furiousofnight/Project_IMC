@@ -131,7 +131,7 @@ def init_db():
                      (id INTEGER PRIMARY KEY AUTOINCREMENT,
                       nome TEXT NOT NULL,
                       idade INTEGER NOT NULL CHECK (idade > 0 AND idade <= 120),
-                      sexo TEXT NOT NULL CHECK (sexo IN ('masculino', 'feminino')),
+                      sexo TEXT NOT NULL CHECK (sexo IN ('masculino', 'feminino', 'outro')),
                       peso REAL NOT NULL CHECK (peso > 0 AND peso <= 300),
                       altura REAL NOT NULL CHECK (altura > 0 AND altura <= 3),
                       imc REAL NOT NULL,
@@ -175,18 +175,23 @@ def calcular_peso_ideal(altura, sexo):
     if sexo.lower() == 'masculino':
         peso_ideal = (72.7 * altura) - 58
         margem = 2.5
-    else:
+    elif sexo.lower() == 'feminino':
         peso_ideal = (62.1 * altura) - 44.7
         margem = 2.0
+    else:  # outro
+        peso_ideal = ((72.7 + 62.1) * altura / 2) - 51.35  # média das fórmulas
+        margem = 2.25  # média das margens
     
     return (peso_ideal - margem, peso_ideal + margem)
 
 def calcular_massa_magra(peso, altura, idade, sexo):
     if sexo.lower() == 'masculino':
-        massa_magra = peso * (1 - (0.20 + (idade - 20) * 0.001))  # 20% base + 0.1% por ano acima de 20
-    else:
-        massa_magra = peso * (1 - (0.25 + (idade - 20) * 0.001))  # 25% base + 0.1% por ano acima de 20
-    return max(round(massa_magra, 1), peso * 0.5)  # Garantir que não seja menor que 50% do peso
+        massa_magra = peso * (1 - (0.20 + (idade - 20) * 0.001))
+    elif sexo.lower() == 'feminino':
+        massa_magra = peso * (1 - (0.25 + (idade - 20) * 0.001))
+    else:  # outro
+        massa_magra = peso * (1 - (0.225 + (idade - 20) * 0.001))  # média dos percentuais
+    return max(round(massa_magra, 1), peso * 0.5)
 
 def calcular_gordura_corporal(peso, massa_magra):
     gordura = ((peso - massa_magra) / peso) * 100
@@ -204,7 +209,7 @@ def classificar_gordura_corporal(gordura, sexo):
             return "Aceitável"
         else:
             return "Obesidade"
-    else:
+    elif sexo.lower() == 'feminino':
         if gordura < 12:
             return "Gordura essencial"
         elif gordura < 20:
@@ -215,13 +220,28 @@ def classificar_gordura_corporal(gordura, sexo):
             return "Aceitável"
         else:
             return "Obesidade"
+    else:  # outro
+        if gordura < 9:  # média entre 6 e 12
+            return "Gordura essencial"
+        elif gordura < 17:  # média entre 14 e 20
+            return "Atleta"
+        elif gordura < 21:  # média entre 18 e 24
+            return "Fitness"
+        elif gordura < 28:  # média entre 25 e 31
+            return "Aceitável"
+        else:
+            return "Obesidade"
 
 def calcular_gasto_calorico(peso, altura, idade, sexo, nivel_atividade):
     # Cálculo do Metabolismo Basal (TMB)
     if sexo.lower() == 'masculino':
         tmb = 88.362 + (13.397 * peso) + (4.799 * altura * 100) - (5.677 * idade)
-    else:
+    elif sexo.lower() == 'feminino':
         tmb = 447.593 + (9.247 * peso) + (3.098 * altura * 100) - (4.330 * idade)
+    else:  # outro
+        tmb_masc = 88.362 + (13.397 * peso) + (4.799 * altura * 100) - (5.677 * idade)
+        tmb_fem = 447.593 + (9.247 * peso) + (3.098 * altura * 100) - (4.330 * idade)
+        tmb = (tmb_masc + tmb_fem) / 2  # média dos cálculos
 
     # Fator de atividade
     fatores = {
@@ -374,7 +394,7 @@ def calcular():
                 raise ValueError("Idade deve estar entre 1 e 120 anos")
 
             dados['sexo'] = sanitize_input(request.form.get('sexo', '').lower().strip())
-            if dados['sexo'] not in ['masculino', 'feminino']:
+            if dados['sexo'] not in ['masculino', 'feminino', 'outro']:
                 raise ValueError("Sexo inválido")
 
             # Limpar e validar peso

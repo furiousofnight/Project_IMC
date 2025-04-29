@@ -142,8 +142,7 @@
     }
 
     select.form-control option {
-        background-color: rgba(20, 20, 35, 1) !important;
-        color: #ffffff !important;
+        background-color: transparent !important;
     }
 
     .btn-primary {
@@ -650,6 +649,77 @@
         opacity: 1 !important;
         text-shadow: none !important;
     }
+
+    /* Estilos para a opção OUTRO com efeito arco-íris */
+    option[value="outro"] {
+        background: linear-gradient(to right, 
+            #ff0000,
+            #ffa500,
+            #ffff00,
+            #00ff00,
+            #0000ff) !important;
+        -webkit-background-clip: text !important;
+        background-clip: text !important;
+        color: transparent !important;
+        font-weight: bold !important;
+    }
+
+    select.form-control {
+        color: white !important;
+        background-color: rgba(20, 20, 35, 0.95) !important;
+    }
+
+    select.form-control option {
+        color: white !important;
+        background-color: rgba(20, 20, 35, 0.95) !important;
+    }
+
+    select.form-control option[value="outro"] {
+        background: rgba(20, 20, 35, 0.95) !important;
+        color: #ff3366 !important;
+        font-weight: bold !important;
+    }
+
+    .rainbow-text {
+        background: transparent !important;
+    }
+
+    .rainbow-text[data-letter="O1"] { color: #FF0000 !important; }
+    .rainbow-text[data-letter="U"] { color: #FFA500 !important; }
+    .rainbow-text[data-letter="T"] { color: #FFFF00 !important; }
+    .rainbow-text[data-letter="R"] { color: #00FF00 !important; }
+    .rainbow-text[data-letter="O2"] { color: #0000FF !important; }
+
+    @keyframes rainbow {
+        0% { color: #ff0000; }
+        20% { color: #ffa500; }
+        40% { color: #ffff00; }
+        60% { color: #00ff00; }
+        80% { color: #0000ff; }
+        100% { color: #ff0000; }
+    }
+
+    option[value="outro"] {
+        animation: rainbow 5s infinite;
+        font-weight: bold;
+        background: transparent !important;
+    }
+
+    .letra-o1 { color: #FF0018 !important; } /* Vermelho */
+    .letra-u { color: #FFA52C !important; }  /* Laranja */
+    .letra-t { color: #FFFF41 !important; }  /* Amarelo */
+    .letra-r { color: #008018 !important; }  /* Verde */
+    .letra-o2 { color: #0000F9 !important; } /* Azul */
+
+    select.form-control option[value="outro"] {
+        background: rgba(20, 20, 35, 0.95) !important;
+        font-weight: bold !important;
+    }
+
+    select.form-control option[value="outro"]:hover,
+    select.form-control option[value="outro"]:checked {
+        background: rgba(20, 20, 35, 0.95) !important;
+    }
 </style>
 {% endblock %}
 
@@ -683,6 +753,9 @@
                         <option value="">Selecione...</option>
                         <option value="masculino">Masculino</option>
                         <option value="feminino">Feminino</option>
+                        <option value="outro" style="font-weight: bold !important;">
+                            🌈 <span style="color: #FF0018 !important;">O</span><span style="color: #FFA52C !important;">U</span><span style="color: #FFFF41 !important;">T</span><span style="color: #008018 !important;">R</span><span style="color: #0000F9 !important;">O</span> 🌈
+                        </option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -725,93 +798,112 @@
 
 {% block extra_js %}
 <script>
+// Remove qualquer estilo anterior que possa interferir
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('form');
-    const inputs = form.querySelectorAll('input[required], select[required]');
-
-    // Função para mostrar mensagem de erro
-    function showError(input, message) {
-        const formGroup = input.closest('.form-group');
-        let errorDiv = formGroup.querySelector('.input-error-message');
-        
-        if (!errorDiv) {
-            errorDiv = document.createElement('div');
-            errorDiv.className = 'input-error-message';
-            formGroup.appendChild(errorDiv);
-        }
-        
-        input.classList.add('is-invalid');
-        errorDiv.textContent = message;
-        errorDiv.style.display = 'block';
+    const select = document.querySelector('select.form-control');
+    if (select) {
+        select.style.backgroundColor = 'rgba(20, 20, 35, 0.95)';
+        const options = select.querySelectorAll('option');
+        options.forEach(option => {
+            if (option.value === 'outro') {
+                option.style.backgroundColor = 'transparent';
+                option.innerHTML = '🌈 ' + 
+                    '<span style="color: #FF0018 !important;">O</span>' +
+                    '<span style="color: #FFA52C !important;">U</span>' +
+                    '<span style="color: #FFFF41 !important;">T</span>' +
+                    '<span style="color: #008018 !important;">R</span>' +
+                    '<span style="color: #0000F9 !important;">O</span>' +
+                    ' 🌈';
+            }
+        });
     }
+});
 
-    // Função para limpar erro
-    function clearError(input) {
-        const formGroup = input.closest('.form-group');
-        const errorDiv = formGroup.querySelector('.input-error-message');
-        
-        input.classList.remove('is-invalid');
-        if (errorDiv) {
-            errorDiv.style.display = 'none';
-        }
+const form = document.querySelector('form');
+const inputs = form.querySelectorAll('input[required], select[required]');
+
+// Função para mostrar mensagem de erro
+function showError(input, message) {
+    const formGroup = input.closest('.form-group');
+    let errorDiv = formGroup.querySelector('.input-error-message');
+    
+    if (!errorDiv) {
+        errorDiv = document.createElement('div');
+        errorDiv.className = 'input-error-message';
+        formGroup.appendChild(errorDiv);
     }
+    
+    input.classList.add('is-invalid');
+    errorDiv.textContent = message;
+    errorDiv.style.display = 'block';
+}
 
-    // Validação em tempo real
+// Função para limpar erro
+function clearError(input) {
+    const formGroup = input.closest('.form-group');
+    const errorDiv = formGroup.querySelector('.input-error-message');
+    
+    input.classList.remove('is-invalid');
+    if (errorDiv) {
+        errorDiv.style.display = 'none';
+    }
+}
+
+// Validação em tempo real
+inputs.forEach(input => {
+    input.addEventListener('blur', function() {
+        if (!this.value) {
+            showError(this, 'Este campo é obrigatório');
+        } else {
+            clearError(this);
+            
+            // Validações específicas
+            if (this.id === 'idade') {
+                const idade = parseInt(this.value);
+                if (idade < 1 || idade > 120) {
+                    showError(this, 'A idade deve estar entre 1 e 120 anos');
+                }
+            }
+            else if (this.id === 'peso') {
+                const peso = parseFloat(this.value);
+                if (peso < 1 || peso > 300) {
+                    showError(this, 'O peso deve estar entre 1 e 300 kg');
+                }
+            }
+            else if (this.id === 'altura') {
+                const altura = parseFloat(this.value);
+                if (altura < 0.5 || altura > 3) {
+                    showError(this, 'A altura deve estar entre 0.5 e 3 metros');
+                }
+            }
+        }
+    });
+
+    input.addEventListener('input', function() {
+        if (this.value) {
+            clearError(this);
+        }
+    });
+});
+
+// Validação no envio do formulário
+form.addEventListener('submit', function(e) {
+    let hasErrors = false;
+    
     inputs.forEach(input => {
-        input.addEventListener('blur', function() {
-            if (!this.value) {
-                showError(this, 'Este campo é obrigatório');
-            } else {
-                clearError(this);
-                
-                // Validações específicas
-                if (this.id === 'idade') {
-                    const idade = parseInt(this.value);
-                    if (idade < 1 || idade > 120) {
-                        showError(this, 'A idade deve estar entre 1 e 120 anos');
-                    }
-                }
-                else if (this.id === 'peso') {
-                    const peso = parseFloat(this.value);
-                    if (peso < 1 || peso > 300) {
-                        showError(this, 'O peso deve estar entre 1 e 300 kg');
-                    }
-                }
-                else if (this.id === 'altura') {
-                    const altura = parseFloat(this.value);
-                    if (altura < 0.5 || altura > 3) {
-                        showError(this, 'A altura deve estar entre 0.5 e 3 metros');
-                    }
-                }
-            }
-        });
-
-        input.addEventListener('input', function() {
-            if (this.value) {
-                clearError(this);
-            }
-        });
-    });
-
-    // Validação no envio do formulário
-    form.addEventListener('submit', function(e) {
-        let hasErrors = false;
-        
-        inputs.forEach(input => {
-            if (!input.value) {
-                e.preventDefault();
-                hasErrors = true;
-                showError(input, 'Este campo é obrigatório');
-            }
-        });
-
-        if (hasErrors) {
-            const firstError = form.querySelector('.is-invalid');
-            if (firstError) {
-                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
+        if (!input.value) {
+            e.preventDefault();
+            hasErrors = true;
+            showError(input, 'Este campo é obrigatório');
         }
     });
+
+    if (hasErrors) {
+        const firstError = form.querySelector('.is-invalid');
+        if (firstError) {
+            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
 });
 </script>
 {% endblock %}
