@@ -1,16 +1,23 @@
 # Usando Python 3.13.3
 FROM python:3.13.3-slim
 
+# Instalar dependências do sistema necessárias para psycopg2
+RUN apt-get update && apt-get install -y \
+    gcc \
+    postgresql-server-dev-all \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 # Criar usuário não-root
 RUN useradd -m -r appuser
 
 # Definir diretório de trabalho
 WORKDIR /app
 
-# Copiar apenas os arquivos necessários
+# Copiar requirements primeiro para aproveitar o cache do Docker
 COPY requirements.txt .
 
-# Instalar dependências
+# Instalar dependências Python
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiar o código da aplicação

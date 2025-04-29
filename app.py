@@ -13,7 +13,6 @@ import logging
 from logging.handlers import RotatingFileHandler
 import math
 import sqlite3
-from models import Session, Medicao, Sexo, NivelAtividade
 from flask_wtf.csrf import generate_csrf
 import re
 
@@ -110,40 +109,6 @@ limiter = Limiter(
     storage_uri="memory://"
 )
 logger.info('Rate limiting configurado')
-
-def init_db():
-    logger.info('Iniciando configuração do banco de dados')
-    try:
-        conn = sqlite3.connect('imc_calculator.db')
-        c = conn.cursor()
-        
-        # Criar tabela com índices otimizados
-        c.execute('''CREATE TABLE IF NOT EXISTS historico_imc
-                     (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                      nome TEXT NOT NULL,
-                      idade INTEGER NOT NULL CHECK (idade > 0 AND idade <= 120),
-                      sexo TEXT NOT NULL CHECK (sexo IN ('masculino', 'feminino')),
-                      peso REAL NOT NULL CHECK (peso > 0 AND peso <= 300),
-                      altura REAL NOT NULL CHECK (altura > 0 AND altura <= 3),
-                      imc REAL NOT NULL,
-                      nivel_atividade TEXT NOT NULL CHECK (nivel_atividade IN 
-                        ('sedentario', 'leve', 'moderado', 'intenso', 'muito_intenso')),
-                      data TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
-        
-        # Criar índices para otimização de consultas
-        c.execute('''CREATE INDEX IF NOT EXISTS idx_historico_imc_nome 
-                     ON historico_imc(nome)''')
-        c.execute('''CREATE INDEX IF NOT EXISTS idx_historico_imc_data 
-                     ON historico_imc(data)''')
-        
-        conn.commit()
-        conn.close()
-        logger.info('Banco de dados configurado com sucesso')
-    except Exception as e:
-        logger.error(f'Erro ao configurar banco de dados: {str(e)}')
-        raise
-
-init_db()
 
 def calcular_imc(peso, altura):
     return peso / (altura ** 2)

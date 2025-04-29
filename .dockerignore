@@ -208,6 +208,8 @@ ENV/
 .vscode/
 *.swp
 *.swo
+*.swn
+*.bak
 
 # Logs
 logs/
@@ -226,3 +228,25 @@ docker-compose*.yml
 *.pem
 *.key
 *.crt
+
+# Arquivos de ambiente e configuração
+.env.*
+*.env
+config.py
+!config.example.py
+
+# Arquivos temporários
+*.tmp
+*.temp
+
+# Documentação e testes
+docs/
+tests/
+README.md
+LICENSE
+
+# Outros
+*.pyc
+*.pyo
+*.pyd
+*.bak
