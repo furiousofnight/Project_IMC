@@ -63,15 +63,16 @@
     }
 
     .progress-container {
-        margin: 2rem 0;
+        margin: 3rem 0;
         position: relative;
+        padding: 2rem 0;
     }
 
     .progress {
-        height: 25px;
+        height: 30px;
         background: rgba(255, 255, 255, 0.1);
-        border-radius: 15px;
-        overflow: hidden;
+        border-radius: 20px;
+        overflow: visible;
         border: 1px solid var(--electric-blue);
         position: relative;
     }
@@ -79,9 +80,321 @@
     .progress-bar {
         height: 100%;
         background: linear-gradient(90deg, var(--neon-green), var(--electric-blue), var(--neon-pink));
-        background-size: 200% 100%;
-        animation: gradientMove 3s linear infinite;
-        transition: width 0.3s ease;
+        border-radius: 20px;
+        transition: width 1s ease;
+        position: relative;
+    }
+
+    /* Marcadores de IMC */
+    .imc-markers {
+        position: absolute;
+        top: -25px;
+        width: 100%;
+        height: 80px;
+    }
+
+    .imc-marker {
+        position: absolute;
+        transform: translateX(-50%);
+        text-align: center;
+    }
+
+    .imc-marker.current {
+        color: var(--cyber-yellow);
+    }
+
+    .imc-marker.ideal {
+        color: var(--neon-pink);
+        text-shadow: 0 0 10px rgba(255, 0, 204, 0.5);
+    }
+
+    .marker-label {
+        display: block;
+        font-size: 0.8rem;
+        margin-bottom: 4px;
+        white-space: nowrap;
+    }
+
+    .marker-value {
+        display: block;
+        font-size: 1.1rem;
+        font-weight: bold;
+        text-shadow: 0 0 10px currentColor;
+    }
+
+    .imc-marker.ideal .marker-value {
+        color: #ffffff;
+        font-weight: 800;
+        text-shadow: 
+            0 0 5px var(--neon-pink),
+            0 0 10px var(--neon-pink),
+            0 0 15px var(--neon-pink);
+    }
+
+    .imc-marker.ideal .marker-label {
+        color: var(--neon-pink);
+        font-weight: 600;
+        text-shadow: 0 0 8px rgba(255, 0, 204, 0.7);
+    }
+
+    /* Escala de IMC */
+    .imc-scale {
+        position: relative;
+        margin-top: 40px;
+        width: 100%;
+        height: 30px;
+    }
+
+    .scale-marker {
+        position: absolute;
+        transform: translateX(-50%);
+        text-align: center;
+        color: var(--wolf-fur);
+    }
+
+    .scale-marker span {
+        display: block;
+        font-size: 0.9rem;
+        font-weight: bold;
+    }
+
+    .scale-marker small {
+        display: block;
+        font-size: 0.7rem;
+        opacity: 0.8;
+    }
+
+    /* Mensagem de objetivo */
+    .objetivo-message {
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+    .objetivo {
+        display: inline-block;
+        padding: 0.8rem 1.5rem;
+        border-radius: 20px;
+        font-weight: 600;
+        animation: pulseObjetivo 2s infinite;
+    }
+
+    .objetivo i {
+        margin-right: 8px;
+    }
+
+    .objetivo.ganhar {
+        background: rgba(0, 255, 0, 0.1);
+        color: var(--neon-green);
+        border: 1px solid var(--neon-green);
+    }
+
+    .objetivo.perder {
+        background: rgba(255, 0, 0, 0.1);
+        color: var(--neon-pink);
+        border: 1px solid var(--neon-pink);
+    }
+
+    .objetivo.manter {
+        background: rgba(0, 255, 255, 0.1);
+        color: var(--electric-blue);
+        border: 1px solid var(--electric-blue);
+    }
+
+    @keyframes pulseObjetivo {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+        .result-container {
+            padding: 1rem;
+            margin: 1rem;
+        }
+
+        .brand-name {
+            font-size: 2rem;
+        }
+
+        .result-header .lead {
+            font-size: 1rem;
+            padding: 0 1rem;
+        }
+
+        .metric-card {
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+        }
+
+        .classification {
+            font-size: 1.4rem;
+        }
+
+        /* Ajustes da barra de progresso */
+        .progress-container {
+            margin: 2rem 0;
+            padding: 1.5rem 0;
+        }
+
+        .progress {
+            height: 25px;
+        }
+
+        .imc-markers {
+            top: -35px;
+            height: 60px;
+        }
+
+        .imc-marker {
+            transform: translateX(-50%) scale(0.9);
+        }
+
+        .marker-label {
+            font-size: 0.7rem;
+        }
+
+        .marker-value {
+            font-size: 0.9rem;
+        }
+
+        .imc-scale {
+            margin-top: 30px;
+        }
+
+        .scale-marker {
+            transform: translateX(-50%) scale(0.8);
+        }
+
+        .scale-marker span {
+            font-size: 0.8rem;
+        }
+
+        .scale-marker small {
+            font-size: 0.6rem;
+            display: none;
+        }
+
+        /* Mostrar apenas valores importantes em telas pequenas */
+        .scale-marker[data-position="muito-abaixo"] small,
+        .scale-marker[data-position="normal"] small,
+        .scale-marker[data-position="obesidade-2"] small {
+            display: block;
+        }
+
+        /* Ajustes das recomendações */
+        .recommendation-section {
+            margin-top: 2rem;
+        }
+
+        .recommendation-box {
+            padding: 1.2rem;
+        }
+
+        .recommendation-box h4 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .recommendation-box li {
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+        }
+
+        /* Ajustes dos botões de ação */
+        .action-buttons {
+            flex-direction: column;
+            gap: 0.8rem;
+            padding: 0 1rem;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 1rem;
+        }
+    }
+
+    /* Ajustes para telas muito pequenas */
+    @media (max-width: 360px) {
+        .brand-name {
+            font-size: 1.8rem;
+        }
+
+        .result-value {
+            font-size: 2rem;
+        }
+
+        .classification {
+            font-size: 1.2rem;
+        }
+
+        .metric-card {
+            padding: 1rem;
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+        }
+
+        .metric-detail {
+            font-size: 0.8rem;
+        }
+
+        /* Simplificar escala em telas muito pequenas */
+        .scale-marker small {
+            display: none;
+        }
+
+        .scale-marker span {
+            font-size: 0.7rem;
+        }
+
+        /* Ajustar espaçamento dos marcadores */
+        .imc-markers {
+            top: -30px;
+        }
+    }
+
+    /* Ajustes para orientação paisagem em celulares */
+    @media (max-height: 600px) and (orientation: landscape) {
+        .result-container {
+            margin: 0.5rem;
+        }
+
+        .metric-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .progress-container {
+            margin: 1rem 0;
+        }
+
+        .recommendation-section {
+            margin-top: 1rem;
+        }
+
+        .action-buttons {
+            position: sticky;
+            bottom: 0;
+            background: var(--cool-gray);
+            padding: 0.5rem;
+            margin: 0;
+            flex-direction: row;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
     }
 
     /* Adicionar classe dinâmica para largura da barra de progresso */
@@ -290,121 +603,304 @@
     .toast.show {
         opacity: 1;
     }
+
+    /* Indicadores de valor ideal */
+    .weight-indicator {
+        margin-top: 1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        text-align: center;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .weight-indicator.ideal {
+        background: rgba(0, 255, 0, 0.1);
+        color: #00ff00;
+        border: 1px solid rgba(0, 255, 0, 0.3);
+    }
+
+    .weight-indicator.above {
+        background: rgba(255, 0, 0, 0.1);
+        color: #ff4d4d;
+        border: 1px solid rgba(255, 0, 0, 0.3);
+    }
+
+    .weight-indicator.below {
+        background: rgba(255, 165, 0, 0.1);
+        color: #ffa500;
+        border: 1px solid rgba(255, 165, 0, 0.3);
+    }
+
+    /* Controle de áudio */
+    .audio-control {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--glass-bg);
+        border: 2px solid var(--electric-blue);
+        color: var(--electric-blue);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1000;
+        transition: all 0.3s ease;
+    }
+
+    .audio-control:hover {
+        transform: scale(1.1);
+        border-color: var(--neon-pink);
+        color: var(--neon-pink);
+    }
+
+    .audio-control.muted {
+        opacity: 0.7;
+    }
+
+    .audio-control.muted i::before {
+        content: "\f6a9";
+    }
+
+    /* Animação de clique */
+    .button-click {
+        transform: scale(0.95);
+        transition: transform 0.1s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Posicionamento dos marcadores */
+    .imc-marker[data-position="current"] {
+        left: var(--marker-position);
+    }
+
+    .imc-marker[data-position="ideal"] {
+        left: var(--marker-position);
+    }
+
+    /* Posicionamento dos marcadores de escala */
+    .scale-marker[data-position="muito-abaixo"] { left: 0%; }
+    .scale-marker[data-position="abaixo"] { left: 10%; }
+    .scale-marker[data-position="normal"] { left: 37%; }
+    .scale-marker[data-position="sobrepeso"] { left: 57%; }
+    .scale-marker[data-position="obesidade-1"] { left: 77%; }
+    .scale-marker[data-position="obesidade-2"] { left: 100%; }
 </style>
 {% endblock %}
 
 {% block content %}
+<!-- Elementos de áudio -->
+<audio id="backgroundMusic" loop>
+    <source src="{{ url_for('static', filename='audio/background.mp3') }}" type="audio/mp3">
+</audio>
+<audio id="clickSound" preload="auto">
+    <source src="{{ url_for('static', filename='audio/click.mp3') }}" type="audio/mp3">
+</audio>
+
+<!-- Controle de áudio -->
+<div class="audio-control" onclick="toggleMusic()">
+    <i class="fas fa-volume-up"></i>
+</div>
+
 <div class="container">
     <div class="result-container animate-on-scroll">
-        <div class="result-header">
+        <div class="result-header text-center">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo mb-4">
             <h1 class="brand-name">SUPER PERFORMANCE</h1>
-            <h2>Resultado da Análise</h2>
-            <p class="lead">Olá {{ nome }}, confira seus resultados detalhados abaixo:</p>
+            <p class="lead">Olá {{ nome }}, confira seus resultados detalhados:</p>
         </div>
 
         <!-- Card Principal do IMC -->
-        <div class="metric-card primary-result animate-on-scroll">
-            <div class="metric-header">
+        <div class="metric-card primary-result animate-on-scroll mb-5">
+            <div class="metric-header text-center">
                 <h3>Seu IMC é:</h3>
                 <div class="result-value" title="Clique para copiar">{{ "%.1f"|format(imc) }}</div>
                 <div class="classification">{{ categoria }}</div>
             </div>
             
-            <!-- Barra de Progresso do IMC -->
             <div class="progress-container">
                 <div class="progress">
                     {% set progress_width = ((imc - 16) / (40 - 16)) * 100 %}
                     {% set rounded_width = progress_width|round(0, 'floor')|int %}
                     {% if rounded_width < 0 %}{% set rounded_width = 0 %}{% endif %}
                     {% if rounded_width > 100 %}{% set rounded_width = 100 %}{% endif %}
+                    
+                    <!-- Barra de progresso principal -->
                     <div class="progress-bar progress-bar-width" style="--progress-width: {{ rounded_width }}%"></div>
+                    
+                    <!-- Marcadores de IMC -->
+                    <div class="imc-markers">
+                        <!-- Marcador do IMC atual -->
+                        <div class="imc-marker current" data-position="current" style="--marker-position: {{ rounded_width }}%">
+                            <span class="marker-label">Seu IMC</span>
+                            <span class="marker-value">{{ "%.1f"|format(imc) }}</span>
+                        </div>
+                        
+                        <!-- Marcador do IMC ideal -->
+                        {% set imc_ideal_medio = 21.7 %}
+                        {% set posicao_ideal = ((imc_ideal_medio - 16) / (40 - 16)) * 100 %}
+                        <div class="imc-marker ideal" data-position="ideal" style="--marker-position: {{ posicao_ideal }}%">
+                            <span class="marker-label">IMC Ideal</span>
+                            <span class="marker-value">18.5-24.9</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="progress-labels">
-                    <span>16</span>
-                    <span>40</span>
+                
+                <!-- Escala de IMC com categorias -->
+                <div class="imc-scale">
+                    <div class="scale-marker" data-position="muito-abaixo">
+                        <span>16</span>
+                        <small>Muito Abaixo</small>
+                    </div>
+                    <div class="scale-marker" data-position="abaixo">
+                        <span>18.5</span>
+                        <small>Abaixo</small>
+                    </div>
+                    <div class="scale-marker" data-position="normal">
+                        <span>24.9</span>
+                        <small>Normal</small>
+                    </div>
+                    <div class="scale-marker" data-position="sobrepeso">
+                        <span>29.9</span>
+                        <small>Sobrepeso</small>
+                    </div>
+                    <div class="scale-marker" data-position="obesidade-1">
+                        <span>34.9</span>
+                        <small>Obesidade I</small>
+                    </div>
+                    <div class="scale-marker" data-position="obesidade-2">
+                        <span>40+</span>
+                        <small>Obesidade II/III</small>
+                    </div>
+                </div>
+                
+                <!-- Mensagem de objetivo -->
+                <div class="objetivo-message">
+                    {% if imc < 18.5 %}
+                        <div class="objetivo ganhar">
+                            <i class="fas fa-arrow-up"></i>
+                            Objetivo: Ganhar peso até IMC 18.5-24.9
+                        </div>
+                    {% elif imc > 24.9 %}
+                        <div class="objetivo perder">
+                            <i class="fas fa-arrow-down"></i>
+                            Objetivo: Reduzir peso até IMC 18.5-24.9
+                        </div>
+                    {% else %}
+                        <div class="objetivo manter">
+                            <i class="fas fa-check"></i>
+                            Seu IMC está na faixa ideal! Mantenha assim!
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
 
         <!-- Grid de Métricas -->
-        <div class="metrics-grid">
+        <div class="row">
             <!-- Peso Ideal -->
-            <div class="metric-card animate-on-scroll">
-                <i class="fas fa-balance-scale metric-icon"></i>
-                <h4>Peso Ideal</h4>
-                <div class="metric-value">{{ "%.1f"|format(peso_ideal_min) }} - {{ "%.1f"|format(peso_ideal_max) }} kg</div>
-                <div class="metric-detail">
-                    {% set peso_ideal_medio = (peso_ideal_min + peso_ideal_max) / 2 %}
-                    {% if peso > peso_ideal_medio %}
-                        Você está {{ "%.1f"|format(peso - peso_ideal_medio) }}kg acima do peso ideal
-                    {% elif peso < peso_ideal_medio %}
-                        Você está {{ "%.1f"|format(peso_ideal_medio - peso) }}kg abaixo do peso ideal
-                    {% else %}
-                        Você está no peso ideal
-                    {% endif %}
+            <div class="col-lg-6 col-xl-3 mb-4">
+                <div class="metric-card h-100">
+                    <i class="fas fa-balance-scale metric-icon"></i>
+                    <h4>Peso Ideal</h4>
+                    <div class="metric-value">{{ "%.1f"|format(peso_ideal_min) }} - {{ "%.1f"|format(peso_ideal_max) }} kg</div>
+                    <div class="metric-detail">
+                        {% set peso_ideal_medio = (peso_ideal_min + peso_ideal_max) / 2 %}
+                        {% if peso > peso_ideal_medio %}
+                            <div class="weight-indicator above">
+                                <i class="fas fa-arrow-up"></i>
+                                {{ "%.1f"|format(peso - peso_ideal_medio) }}kg acima
+                            </div>
+                        {% elif peso < peso_ideal_medio %}
+                            <div class="weight-indicator below">
+                                <i class="fas fa-arrow-down"></i>
+                                {{ "%.1f"|format(peso_ideal_medio - peso) }}kg abaixo
+                            </div>
+                        {% else %}
+                            <div class="weight-indicator ideal">
+                                <i class="fas fa-check"></i>
+                                Peso Ideal
+                            </div>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
 
             <!-- Composição Corporal -->
-            <div class="metric-card animate-on-scroll">
-                <i class="fas fa-percentage metric-icon"></i>
-                <h4>Composição Corporal</h4>
-                <div class="metric-value">{{ "%.1f"|format(gordura_corporal) }}% Gordura</div>
-                <div class="metric-detail">
-                    Massa Magra: {{ "%.1f"|format(massa_magra) }}kg<br>
-                    Classificação: {{ classificacao_gordura }}
+            <div class="col-lg-6 col-xl-3 mb-4">
+                <div class="metric-card h-100">
+                    <i class="fas fa-percentage metric-icon"></i>
+                    <h4>Composição Corporal</h4>
+                    <div class="metric-value">{{ "%.1f"|format(gordura_corporal) }}% Gordura</div>
+                    <div class="metric-detail">
+                        Massa Magra: {{ "%.1f"|format(massa_magra) }}kg<br>
+                        Classificação: {{ classificacao_gordura }}
+                    </div>
                 </div>
             </div>
 
             <!-- Gasto Calórico -->
-            <div class="metric-card animate-on-scroll">
-                <i class="fas fa-fire metric-icon"></i>
-                <h4>Gasto Calórico</h4>
-                <div class="metric-value">{{ gasto_calorico|int }} kcal/dia</div>
-                <div class="metric-detail">
-                    Metabolismo Basal: {{ tmb|int }} kcal/dia<br>
-                    Nível de Atividade: {{ nivel_atividade|title }}
+            <div class="col-lg-6 col-xl-3 mb-4">
+                <div class="metric-card h-100">
+                    <i class="fas fa-fire metric-icon"></i>
+                    <h4>Gasto Calórico</h4>
+                    <div class="metric-value">{{ gasto_calorico|int }} kcal/dia</div>
+                    <div class="metric-detail">
+                        Metabolismo Basal: {{ tmb|int }} kcal/dia<br>
+                        Nível de Atividade: {{ nivel_atividade|title }}
+                    </div>
                 </div>
             </div>
 
             <!-- Hidratação -->
-            <div class="metric-card animate-on-scroll">
-                <i class="fas fa-tint metric-icon"></i>
-                <h4>Hidratação Recomendada</h4>
-                <div class="metric-value">{{ "%.1f"|format(agua_diaria) }} L/dia</div>
-                <div class="metric-detail">
-                    Recomendação baseada no seu peso e nível de atividade física
+            <div class="col-lg-6 col-xl-3 mb-4">
+                <div class="metric-card h-100">
+                    <i class="fas fa-tint metric-icon"></i>
+                    <h4>Hidratação Recomendada</h4>
+                    <div class="metric-value">{{ "%.1f"|format(agua_diaria) }} L/dia</div>
+                    <div class="metric-detail">
+                        Recomendação baseada no seu peso e nível de atividade
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Seção de Recomendações -->
-        <div class="recommendations-section animate-on-scroll">
-            <h3>Recomendações Personalizadas</h3>
-            
-            <!-- Plano Nutricional -->
-            <div class="recommendation-box nutricional">
-                <h4><i class="fas fa-utensils"></i> Plano Nutricional</h4>
-                {{ plano_nutricional|safe }}
-            </div>
-
-            <!-- Plano de Exercícios -->
-            <div class="recommendation-box exercicios">
-                <h4><i class="fas fa-dumbbell"></i> Plano de Exercícios</h4>
-                {{ plano_exercicios|safe }}
+        <!-- Recomendações -->
+        <div class="recommendations-section mt-5">
+            <h3 class="text-center mb-4">Recomendações Personalizadas</h3>
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="recommendation-box nutricional h-100">
+                        <h4><i class="fas fa-utensils"></i> Plano Nutricional</h4>
+                        {{ plano_nutricional|safe }}
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="recommendation-box exercicios h-100">
+                        <h4><i class="fas fa-dumbbell"></i> Plano de Exercícios</h4>
+                        {{ plano_exercicios|safe }}
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Botões de Ação -->
-        <div class="action-buttons animate-on-scroll">
-            <button onclick="window.print()" class="btn btn-secondary">
+        <div class="action-buttons text-center mt-5">
+            <button onclick="window.print()" class="btn btn-secondary mx-2">
                 <i class="fas fa-print"></i> Imprimir Resultados
             </button>
-            <a href="{{ url_for('historico') }}" class="btn btn-info">
+            <a href="{{ url_for('historico') }}" class="btn btn-info mx-2">
                 <i class="fas fa-history"></i> Ver Histórico
             </a>
-            <a href="{{ url_for('home') }}" class="btn btn-primary">
-                <i class="fas fa-calculator"></i> Calcular Novamente
+            <a href="{{ url_for('home') }}" class="btn btn-primary mx-2">
+                <i class="fas fa-calculator"></i> Novo Cálculo
             </a>
         </div>
 
@@ -416,7 +912,6 @@
     </div>
 </div>
 
-<!-- Toast para notificações -->
 <div id="toast" class="toast"></div>
 {% endblock %}
 
@@ -492,5 +987,43 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(element);
     });
 });
+
+let backgroundMusic = document.getElementById('backgroundMusic');
+let clickSound = document.getElementById('clickSound');
+let isPlaying = false;
+
+// Configurar volume inicial
+backgroundMusic.volume = 0.3;
+clickSound.volume = 0.5;
+
+function toggleMusic() {
+    const audioControl = document.querySelector('.audio-control');
+    if (isPlaying) {
+        backgroundMusic.pause();
+        audioControl.classList.add('muted');
+    } else {
+        backgroundMusic.play();
+        audioControl.classList.remove('muted');
+    }
+    isPlaying = !isPlaying;
+}
+
+// Som de clique para todos os botões
+document.querySelectorAll('button, .btn, .metric-card').forEach(element => {
+    element.addEventListener('click', () => {
+        clickSound.currentTime = 0; // Resetar o som para evitar delay
+        clickSound.play();
+        element.classList.add('button-click');
+        setTimeout(() => element.classList.remove('button-click'), 100);
+    });
+});
+
+// Iniciar música após interação do usuário
+document.addEventListener('click', () => {
+    if (!isPlaying) {
+        backgroundMusic.play();
+        isPlaying = true;
+    }
+}, { once: true });
 </script>
 {% endblock %}

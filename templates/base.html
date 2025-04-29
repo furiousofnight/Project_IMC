@@ -29,10 +29,23 @@
     
     <style>
         :root {
-            --cyber-yellow: #FFE742;
-            --electric-blue: #4F46E5;
-            --neon-pink: #FF1B6B;
+            --neon-pink: #ff007b;
+            --electric-blue: #00ffff;
+            --cyber-yellow: #ffe742;
+            --cool-gray: #141423;
+            --wolf-fur: #bfc7d5;
+            --glass-bg: rgba(20, 20, 35, 0.95);
+            --glass-border: rgba(255, 255, 255, 0.1);
             --dark-bg: rgba(20, 20, 35, 0.95);
+            --border-radius: 15px;
+            --input-padding: 1rem;
+            --error-color: #ef5350;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
@@ -62,18 +75,16 @@
         input[type="text"],
         input[type="number"],
         select {
-            background-color: var(--dark-bg) !important;
-            color: var(--cyber-yellow) !important;
+            background-color: rgba(20, 20, 35, 1) !important;
+            color: #ffffff !important;
             border: 2px solid var(--electric-blue) !important;
             border-radius: 8px !important;
             padding: 0.75rem !important;
             width: 100% !important;
             font-size: 1rem !important;
             transition: all 0.3s ease !important;
-            box-shadow: inset 0 0 1000px var(--dark-bg) !important;
-            -webkit-text-fill-color: var(--cyber-yellow) !important;
-            caret-color: var(--cyber-yellow) !important;
-            background-clip: content-box !important;
+            box-shadow: none !important;
+            backdrop-filter: none !important;
         }
 
         @media (max-width: 768px) {
@@ -92,7 +103,8 @@
         select:focus {
             outline: none !important;
             border-color: var(--neon-pink) !important;
-            box-shadow: 0 0 10px var(--neon-pink), inset 0 0 1000px var(--dark-bg) !important;
+            background-color: rgba(20, 20, 35, 0.98) !important;
+            box-shadow: 0 0 20px rgba(255, 0, 204, 0.2) !important;
         }
 
         .custom-input::placeholder {
@@ -105,17 +117,17 @@
         input:-webkit-autofill:hover,
         input:-webkit-autofill:focus,
         input:-webkit-autofill:active {
-            -webkit-box-shadow: 0 0 0 30px var(--dark-bg) inset !important;
-            -webkit-text-fill-color: var(--cyber-yellow) !important;
-            caret-color: var(--cyber-yellow) !important;
-            transition: background-color 5000s ease-in-out 0s;
+            -webkit-box-shadow: 0 0 0 30px rgba(20, 20, 35, 1) inset !important;
+            -webkit-text-fill-color: #ffffff !important;
+            caret-color: #ffffff !important;
         }
 
         .form-label {
             color: var(--cyber-yellow);
-            font-weight: 500;
+            font-weight: 600;
             margin-bottom: 0.5rem;
             font-size: 1rem;
+            opacity: 1;
         }
 
         @media (max-width: 768px) {
@@ -148,6 +160,8 @@
 
         /* Estilos para select e suas opções */
         select {
+            background-color: rgba(20, 20, 35, 1) !important;
+            color: #ffffff !important;
             -webkit-appearance: none !important;
             -moz-appearance: none !important;
             appearance: none !important;
@@ -159,9 +173,9 @@
 
         /* Estilização do dropdown do select */
         select option {
-            background-color: var(--dark-bg) !important;
-            color: var(--cyber-yellow) !important;
-            padding: 1rem !important;
+            background-color: rgba(20, 20, 35, 1) !important;
+            color: #ffffff !important;
+            padding: 0.5rem !important;
             font-size: 1rem !important;
             border-bottom: 1px solid rgba(255, 231, 66, 0.1) !important;
             transition: all 0.3s ease !important;

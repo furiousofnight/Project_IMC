@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}SUPER PERFORMANCE{% endblock %}
+{% block title %}Calculadora IMC - SUPER PERFORMANCE{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -21,10 +21,11 @@
 
     /* Removendo a película do fundo */
     body::before {
-        opacity: 0.2;
-        background: 
-            radial-gradient(circle at 20% 20%, rgba(79, 70, 229, 0.4) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, rgba(255, 27, 107, 0.4) 0%, transparent 50%);
+        display: none;
+    }
+
+    body::after {
+        display: none;
     }
 
     .card {
@@ -46,8 +47,8 @@
         font-size: 2.5rem !important;
         font-weight: 800 !important;
         text-shadow: 0 0 15px rgba(255, 231, 66, 0.5);
-        -webkit-text-fill-color: var(--cyber-yellow) !important;
         margin-bottom: 1rem !important;
+        opacity: 1 !important;
     }
 
     .card-header h2 {
@@ -113,26 +114,26 @@
         color: var(--cyber-yellow) !important;
         font-size: 1.1rem !important;
         font-weight: 600 !important;
-        text-shadow: 0 0 8px rgba(255, 231, 66, 0.3);
-        -webkit-text-fill-color: var(--cyber-yellow) !important;
-        margin-bottom: 0.8rem !important;
+        text-shadow: none !important;
         opacity: 1 !important;
     }
 
     .custom-input,
     select.form-control {
-        background: rgba(20, 20, 35, 0.98) !important;
+        background: rgba(20, 20, 35, 1) !important;
         border: 2px solid var(--electric-blue) !important;
         color: #ffffff !important;
         font-weight: 500 !important;
         -webkit-text-fill-color: #ffffff !important;
-        box-shadow: 0 5px 15px rgba(0, 204, 255, 0.2) !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
     }
 
     .custom-input:focus,
     select.form-control:focus {
+        background: rgba(20, 20, 35, 1) !important;
         border-color: var(--neon-pink) !important;
-        box-shadow: 0 8px 25px rgba(255, 27, 107, 0.3) !important;
+        box-shadow: 0 0 15px rgba(255, 0, 204, 0.2) !important;
     }
 
     .custom-input::placeholder {
@@ -141,9 +142,8 @@
     }
 
     select.form-control option {
-        background: rgba(20, 20, 35, 0.98) !important;
+        background-color: rgba(20, 20, 35, 1) !important;
         color: #ffffff !important;
-        font-weight: 500 !important;
     }
 
     .btn-primary {
@@ -190,101 +190,628 @@
     .form-group:hover .form-text {
         opacity: 1 !important;
     }
+
+    /* Estilos para campos obrigatórios e validação */
+    .form-label::after {
+        content: '*';
+        color: var(--neon-pink);
+        margin-left: 4px;
+        font-size: 1.2rem;
+        animation: pulsate 1.5s infinite;
+    }
+
+    @keyframes pulsate {
+        0% { opacity: 0.5; }
+        50% { opacity: 1; }
+        100% { opacity: 0.5; }
+    }
+
+    .input-error-message {
+        color: var(--neon-pink);
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        padding: 0.5rem;
+        border-radius: 4px;
+        background: rgba(255, 0, 123, 0.1);
+        border-left: 3px solid var(--neon-pink);
+        display: none;
+        animation: slideIn 0.3s ease-in-out;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .form-control.is-invalid {
+        border-color: var(--neon-pink) !important;
+        box-shadow: 0 0 10px rgba(255, 0, 123, 0.2) !important;
+    }
+
+    .form-control.is-invalid:focus {
+        box-shadow: 0 0 15px rgba(255, 0, 123, 0.3) !important;
+    }
+
+    .form-text {
+        color: var(--wolf-fur);
+        font-size: 0.85rem;
+        margin-top: 0.4rem;
+        opacity: 0.8;
+    }
+
+    /* Estilo para o asterisco de campo obrigatório no topo do formulário */
+    .required-field-notice {
+        color: var(--wolf-fur);
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+        text-align: right;
+        opacity: 0.9;
+    }
+
+    .required-field-notice span {
+        color: var(--neon-pink);
+        margin-right: 4px;
+    }
+
+    /* Melhorias no alerta de erro */
+    .alert-danger {
+        background: rgba(255, 0, 123, 0.1);
+        border: none;
+        border-left: 4px solid var(--neon-pink);
+        color: var(--wolf-fur);
+        padding: 1rem;
+        margin-bottom: 2rem;
+        border-radius: 4px;
+        font-weight: 500;
+        animation: alertSlideIn 0.3s ease-in-out;
+    }
+
+    @keyframes alertSlideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .calculator-container {
+        background: rgba(20, 20, 35, 1);
+        border: 2px solid var(--electric-blue);
+        border-radius: 20px;
+        padding: 3rem;
+        margin: 2rem auto;
+        max-width: 800px;
+        box-shadow: 0 0 30px rgba(0, 204, 255, 0.3);
+        position: relative;
+        overflow: hidden;
+        animation: containerGlow 3s infinite alternate;
+        backdrop-filter: none;
+    }
+
+    .calculator-container::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+            45deg,
+            transparent,
+            rgba(0, 204, 255, 0.15),
+            transparent
+        );
+        transform: rotate(45deg);
+        animation: lightSweep 3s infinite;
+        opacity: 1;
+    }
+
+    @keyframes containerGlow {
+        0% {
+            box-shadow: 0 0 30px rgba(0, 204, 255, 0.2);
+        }
+        100% {
+            box-shadow: 0 0 50px rgba(0, 204, 255, 0.4);
+        }
+    }
+
+    @keyframes lightSweep {
+        0% {
+            transform: rotate(45deg) translateY(-100%);
+        }
+        100% {
+            transform: rotate(45deg) translateY(100%);
+        }
+    }
+
+    .calculator-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+    }
+
+    .logo {
+        width: 180px;
+        height: auto;
+        margin: 0 auto 1.5rem;
+        filter: drop-shadow(0 0 15px rgba(0, 204, 255, 0.5));
+        animation: logoFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes logoFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    .brand-name {
+        font-size: 3rem;
+        background: linear-gradient(45deg, var(--cyber-yellow), var(--neon-pink));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-transform: uppercase;
+        font-weight: 800;
+        letter-spacing: 2px;
+        margin-bottom: 1rem;
+        text-shadow: 0 0 20px rgba(255, 231, 66, 0.8);
+        animation: textGlow 2s infinite alternate;
+        opacity: 1;
+    }
+
+    @keyframes textGlow {
+        0% { text-shadow: 0 0 20px rgba(255, 231, 66, 0.5); }
+        100% { text-shadow: 0 0 40px rgba(255, 231, 66, 0.8); }
+    }
+
+    .lead {
+        color: var(--wolf-fur);
+        font-size: 1.3rem;
+        margin-bottom: 2rem;
+        text-shadow: 0 0 10px rgba(191, 199, 213, 0.5);
+        opacity: 1;
+    }
+
+    .form-container {
+        background: rgba(20, 20, 35, 1);
+        border-radius: 15px;
+        padding: 2.5rem;
+        position: relative;
+        border: 1px solid rgba(0, 204, 255, 0.5);
+        box-shadow: 0 0 30px rgba(0, 204, 255, 0.15);
+        backdrop-filter: none;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .form-group {
+        position: relative;
+        margin-bottom: 2rem;
+    }
+
+    .form-label {
+        color: var(--cyber-yellow);
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        opacity: 1;
+        text-shadow: 0 0 10px rgba(255, 231, 66, 0.3);
+    }
+
+    .form-group:hover .form-label {
+        color: var(--neon-pink);
+        text-shadow: 0 0 10px rgba(255, 0, 204, 0.5);
+    }
+
+    .form-control {
+        background: rgba(20, 20, 35, 1) !important;
+        border: 2px solid var(--electric-blue) !important;
+        border-radius: 10px;
+        color: #ffffff !important;
+        padding: 1rem;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        width: 100%;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--neon-pink) !important;
+        box-shadow: 0 0 20px rgba(255, 0, 204, 0.3) !important;
+        transform: translateY(-2px);
+        background: rgba(25, 25, 40, 1) !important;
+    }
+
+    .btn-calculate {
+        background: linear-gradient(45deg, var(--electric-blue), var(--neon-pink));
+        border: none;
+        border-radius: 10px;
+        color: #ffffff;
+        font-size: 1.2rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        padding: 1.2rem 2.5rem;
+        width: 100%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        margin-top: 2rem;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        box-shadow: 0 0 20px rgba(0, 204, 255, 0.3);
+    }
+
+    .btn-calculate:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(255, 0, 204, 0.4);
+        background: linear-gradient(45deg, var(--neon-pink), var(--electric-blue));
+    }
+
+    .btn-calculate::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+            45deg,
+            transparent,
+            rgba(255, 255, 255, 0.2),
+            transparent
+        );
+        transform: rotate(45deg);
+        transition: all 0.3s ease;
+    }
+
+    .btn-calculate:hover::before {
+        animation: buttonGlow 1.5s infinite;
+    }
+
+    @keyframes buttonGlow {
+        0% {
+            transform: rotate(45deg) translateX(-100%);
+        }
+        100% {
+            transform: rotate(45deg) translateX(100%);
+        }
+    }
+
+    .btn-calculate i {
+        margin-right: 10px;
+        font-size: 1.3rem;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+        .calculator-container {
+            padding: 2rem;
+            margin: 1rem;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .brand-name {
+            font-size: 2.5rem;
+        }
+
+        .lead {
+            font-size: 1.1rem;
+        }
+
+        .form-container {
+            padding: 1.5rem;
+        }
+
+        .btn-calculate {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .calculator-container {
+            padding: 1.5rem;
+        }
+
+        .brand-name {
+            font-size: 2rem;
+        }
+
+        .form-container {
+            padding: 1rem;
+        }
+
+        .form-label {
+            font-size: 1rem;
+        }
+
+        .form-control {
+            padding: 0.8rem;
+            font-size: 1rem;
+        }
+
+        .btn-calculate {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+        }
+    }
+
+    /* Ajustes para telas muito pequenas */
+    @media (max-width: 360px) {
+        .calculator-container {
+            margin: 0.3rem;
+            padding: 0.8rem;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+        }
+
+        .header-subtitle {
+            font-size: 0.9rem;
+        }
+
+        .form-label {
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            padding: 0.7rem;
+            font-size: 15px;
+        }
+    }
+
+    /* Ajustes para orientação paisagem em celulares */
+    @media (max-height: 600px) and (orientation: landscape) {
+        .calculator-container {
+            margin: 0.5rem auto;
+            max-width: 90%;
+        }
+
+        .form-row {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .submit-container {
+            margin-top: 1rem;
+        }
+
+        .btn-calculate {
+            padding: 0.6rem 2rem;
+            width: auto;
+        }
+    }
+
+    /* Melhorias na acessibilidade e interatividade */
+    .form-control:hover {
+        border-color: var(--wolf-fur);
+    }
+
+    .form-group input:invalid {
+        border-color: #ff4444;
+    }
+
+    .form-group input:invalid:focus {
+        box-shadow: 0 0 15px rgba(255, 68, 68, 0.2);
+    }
+
+    /* Animações suaves */
+    .form-group {
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .btn-calculate {
+        transition: transform 0.2s ease;
+    }
+
+    .btn-calculate:active {
+        transform: scale(0.98);
+    }
+
+    .lead {
+        color: var(--wolf-fur) !important;
+        font-size: 1.2rem !important;
+        opacity: 1 !important;
+        text-shadow: none !important;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo">
-                    <h2>SUPER PERFORMANCE</h2>
+<div class="calculator-container">
+    <div class="calculator-header">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo">
+        <h1 class="brand-name">SUPER PERFORMANCE</h1>
+        <p class="lead">Calcule seu IMC e descubra seu plano personalizado</p>
+    </div>
+
+    <div class="form-container">
+        <form method="POST" action="{{ url_for('calcular') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="nome" name="nome" required>
                 </div>
-                <div class="card-body">
-                    {% if erro %}
-                    <div class="alert" role="alert">
-                        {{ erro }}
-                    </div>
-                    {% endif %}
-                    
-                    <form action="{{ url_for('calcular') }}" method="POST" class="needs-validation" novalidate>
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="nome" class="form-label">Nome</label>
-                                    <input type="text" class="custom-input" id="nome" name="nome" required 
-                                           minlength="2" maxlength="100" autocomplete="name"
-                                           aria-describedby="nomeHelp">
-                                    <small id="nomeHelp" class="form-text">Digite seu nome completo</small>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="idade" class="form-label">Idade</label>
-                                    <input type="number" class="custom-input" id="idade" name="idade" required
-                                           min="1" max="120" step="1" autocomplete="off"
-                                           aria-describedby="idadeHelp">
-                                    <small id="idadeHelp" class="form-text">Idade em anos</small>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="peso" class="form-label">Peso (kg)</label>
-                                    <input type="number" class="custom-input" id="peso" name="peso" required
-                                           min="1" max="300" step="0.1" autocomplete="off"
-                                           aria-describedby="pesoHelp">
-                                    <small id="pesoHelp" class="form-text">Peso em quilogramas</small>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="altura" class="form-label">Altura (m)</label>
-                                    <input type="number" class="custom-input" id="altura" name="altura" required
-                                           min="0.5" max="3" step="0.01" autocomplete="off"
-                                           aria-describedby="alturaHelp">
-                                    <small id="alturaHelp" class="form-text">Altura em metros (ex: 1.75)</small>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="sexo" class="form-label">Sexo</label>
-                                    <select class="form-control" id="sexo" name="sexo" required
-                                            aria-describedby="sexoHelp">
-                                        <option value="" disabled selected>Selecione...</option>
-                                        <option value="masculino">Masculino</option>
-                                        <option value="feminino">Feminino</option>
-                                    </select>
-                                    <small id="sexoHelp" class="form-text">Sexo biológico para cálculos metabólicos</small>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="nivel_atividade" class="form-label">Nível de Atividade</label>
-                                    <select class="form-control" id="nivel_atividade" name="nivel_atividade" required
-                                            aria-describedby="atividadeHelp">
-                                        <option value="" disabled selected>Selecione...</option>
-                                        <option value="sedentario">Sedentário</option>
-                                        <option value="leve">Atividade Leve</option>
-                                        <option value="moderado">Atividade Moderada</option>
-                                        <option value="intenso">Atividade Intensa</option>
-                                        <option value="muito_intenso">Atividade Muito Intensa</option>
-                                    </select>
-                                    <small id="atividadeHelp" class="form-text">Seu nível habitual de atividade física</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center mt-4">
-                            <button type="submit" class="btn btn-primary" id="submitBtn">
-                                <i class="fas fa-calculator me-2"></i>Calcular
-                            </button>
-                        </div>
-                    </form>
+                <div class="form-group">
+                    <label for="idade" class="form-label">Idade</label>
+                    <input type="number" class="form-control" id="idade" name="idade" min="1" max="120" required>
                 </div>
             </div>
-        </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="sexo" class="form-label">Sexo</label>
+                    <select class="form-control" id="sexo" name="sexo" required>
+                        <option value="">Selecione...</option>
+                        <option value="masculino">Masculino</option>
+                        <option value="feminino">Feminino</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="nivel_atividade" class="form-label">Nível de Atividade</label>
+                    <select class="form-control" id="nivel_atividade" name="nivel_atividade" required>
+                        <option value="">Selecione...</option>
+                        <option value="sedentario">Sedentário</option>
+                        <option value="leve">Leve</option>
+                        <option value="moderado">Moderado</option>
+                        <option value="intenso">Intenso</option>
+                        <option value="muito_intenso">Muito Intenso</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="peso" class="form-label">Peso (kg)</label>
+                    <input type="number" class="form-control" id="peso" name="peso" step="0.1" min="1" max="300" required>
+                </div>
+                <div class="form-group">
+                    <label for="altura" class="form-label">Altura (m)</label>
+                    <input type="number" class="form-control" id="altura" name="altura" step="0.01" min="0.5" max="3" required>
+                </div>
+            </div>
+
+            <div class="submit-container">
+                <button type="submit" class="btn-calculate">
+                    <i class="fas fa-calculator"></i> Calcular
+                </button>
+            </div>
+        </form>
     </div>
 </div>
+
+{% if erro %}
+<div class="error-message">{{ erro }}</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const inputs = form.querySelectorAll('input[required], select[required]');
+
+    // Função para mostrar mensagem de erro
+    function showError(input, message) {
+        const formGroup = input.closest('.form-group');
+        let errorDiv = formGroup.querySelector('.input-error-message');
+        
+        if (!errorDiv) {
+            errorDiv = document.createElement('div');
+            errorDiv.className = 'input-error-message';
+            formGroup.appendChild(errorDiv);
+        }
+        
+        input.classList.add('is-invalid');
+        errorDiv.textContent = message;
+        errorDiv.style.display = 'block';
+    }
+
+    // Função para limpar erro
+    function clearError(input) {
+        const formGroup = input.closest('.form-group');
+        const errorDiv = formGroup.querySelector('.input-error-message');
+        
+        input.classList.remove('is-invalid');
+        if (errorDiv) {
+            errorDiv.style.display = 'none';
+        }
+    }
+
+    // Validação em tempo real
+    inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+            if (!this.value) {
+                showError(this, 'Este campo é obrigatório');
+            } else {
+                clearError(this);
+                
+                // Validações específicas
+                if (this.id === 'idade') {
+                    const idade = parseInt(this.value);
+                    if (idade < 1 || idade > 120) {
+                        showError(this, 'A idade deve estar entre 1 e 120 anos');
+                    }
+                }
+                else if (this.id === 'peso') {
+                    const peso = parseFloat(this.value);
+                    if (peso < 1 || peso > 300) {
+                        showError(this, 'O peso deve estar entre 1 e 300 kg');
+                    }
+                }
+                else if (this.id === 'altura') {
+                    const altura = parseFloat(this.value);
+                    if (altura < 0.5 || altura > 3) {
+                        showError(this, 'A altura deve estar entre 0.5 e 3 metros');
+                    }
+                }
+            }
+        });
+
+        input.addEventListener('input', function() {
+            if (this.value) {
+                clearError(this);
+            }
+        });
+    });
+
+    // Validação no envio do formulário
+    form.addEventListener('submit', function(e) {
+        let hasErrors = false;
+        
+        inputs.forEach(input => {
+            if (!input.value) {
+                e.preventDefault();
+                hasErrors = true;
+                showError(input, 'Este campo é obrigatório');
+            }
+        });
+
+        if (hasErrors) {
+            const firstError = form.querySelector('.is-invalid');
+            if (firstError) {
+                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    });
+});
+</script>
 {% endblock %}

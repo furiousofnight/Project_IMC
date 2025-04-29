@@ -82,12 +82,12 @@ def handle_csrf_error(e):
 
 # Configurar Talisman com base no ambiente
 is_production = os.getenv('FLASK_ENV') == 'production'
-Talisman(app, 
+talisman = Talisman(app, 
     force_https=is_production,
     strict_transport_security=is_production,
     session_cookie_secure=is_production,
     content_security_policy={
-        'default-src': "'self'",
+        'default-src': ["'self'"],
         'style-src': ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com", "https://cdn.jsdelivr.net"],
         'script-src': ["'self'", "https://cdn.jsdelivr.net", "'unsafe-inline'"],
         'font-src': ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
@@ -312,9 +312,19 @@ def sanitize_input(text):
     text = text.replace("'", '&#x27;')
     return text
 
+def sanitize_numeric_input(value):
+    if isinstance(value, str):
+        # Remove espaços e substitui vírgula por ponto
+        value = value.strip().replace(',', '.')
+        # Remove caracteres não numéricos (exceto ponto)
+        value = ''.join(c for c in value if c.isdigit() or c == '.')
+    return value
+
 @app.before_request
 def before_request():
-    if not request.is_secure and is_production:
+    if request.path == '/health':
+        return None
+    if not request.is_secure and is_production and request.headers.get('X-Forwarded-Proto', 'http') == 'http':
         url = request.url.replace('http://', 'https://', 1)
         return redirect(url, code=301)
 
@@ -357,23 +367,29 @@ def calcular():
             if not dados['nome'] or len(dados['nome']) < 2:
                 raise ValueError("Nome inválido")
 
-            dados['idade'] = int(sanitize_input(request.form.get('idade', '0')))
+            # Limpar e validar idade
+            idade_str = sanitize_numeric_input(request.form.get('idade', '0'))
+            dados['idade'] = int(float(idade_str))
             if dados['idade'] < 1 or dados['idade'] > 120:
                 raise ValueError("Idade deve estar entre 1 e 120 anos")
 
-            dados['sexo'] = sanitize_input(request.form.get('sexo', '').lower())
+            dados['sexo'] = sanitize_input(request.form.get('sexo', '').lower().strip())
             if dados['sexo'] not in ['masculino', 'feminino']:
                 raise ValueError("Sexo inválido")
 
-            dados['peso'] = float(sanitize_input(request.form.get('peso', '0').replace(',', '.')))
+            # Limpar e validar peso
+            peso_str = sanitize_numeric_input(request.form.get('peso', '0'))
+            dados['peso'] = float(peso_str)
             if dados['peso'] < 1 or dados['peso'] > 300:
                 raise ValueError("Peso deve estar entre 1 e 300 kg")
 
-            dados['altura'] = float(sanitize_input(request.form.get('altura', '0').replace(',', '.')))
+            # Limpar e validar altura
+            altura_str = sanitize_numeric_input(request.form.get('altura', '0'))
+            dados['altura'] = float(altura_str)
             if dados['altura'] < 0.5 or dados['altura'] > 3:
                 raise ValueError("Altura deve estar entre 0.5 e 3 metros")
 
-            dados['nivel_atividade'] = sanitize_input(request.form.get('nivel_atividade', '').lower())
+            dados['nivel_atividade'] = sanitize_input(request.form.get('nivel_atividade', '').lower().strip())
             if dados['nivel_atividade'] not in ['sedentario', 'leve', 'moderado', 'intenso', 'muito_intenso']:
                 raise ValueError("Nível de atividade inválido")
 
@@ -513,6 +529,18 @@ def historico():
     except Exception as e:
         logger.error(f'Erro na página de histórico: {str(e)}', exc_info=True)
         return render_template("500.html"), 500
+
+@app.route('/health')
+@talisman(force_https=False)
+def health():
+    try:
+        # Testar conexão com o banco de dados
+        conn = sqlite3.connect(DB_PATH)
+        conn.close()
+        return jsonify({"status": "healthy", "database": "connected"}), 200
+    except Exception as e:
+        logger.error(f'Health check falhou: {str(e)}')
+        return jsonify({"status": "unhealthy", "error": str(e)}), 500
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 8080))

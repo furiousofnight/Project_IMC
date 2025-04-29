@@ -24,28 +24,30 @@
 
         <div class="history-table">
             <h3>Histórico Detalhado</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Data</th>
-                        <th>Peso (kg)</th>
-                        <th>IMC</th>
-                        <th>Categoria</th>
-                        <th>Gordura Corporal (%)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for registro in historico|reverse %}
-                    <tr>
-                        <td>{{ registro.data }}</td>
-                        <td>{{ registro.peso }}</td>
-                        <td>{{ registro.imc }}</td>
-                        <td>{{ registro.categoria }}</td>
-                        <td>{{ registro.gordura_corporal }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Peso (kg)</th>
+                            <th>IMC</th>
+                            <th>Categoria</th>
+                            <th>Gordura Corporal (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for registro in historico|reverse %}
+                        <tr>
+                            <td>{{ registro.data }}</td>
+                            <td>{{ registro.peso }}</td>
+                            <td>{{ registro.imc }}</td>
+                            <td>{{ registro.categoria }}</td>
+                            <td>{{ registro.gordura_corporal }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -60,30 +62,37 @@
 <style>
 .analysis-container {
     background: rgba(255, 255, 255, 0.1);
-    border-radius: var(--border-radius-default);
+    border-radius: var(--border-radius);
     padding: 2rem;
     margin: 2rem 0;
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
 }
 
 .summary-box {
     background: rgba(0, 0, 0, 0.2);
     padding: 1.5rem;
-    border-radius: var(--border-radius-default);
+    border-radius: var(--border-radius);
     margin-bottom: 2rem;
+    border-left: 4px solid var(--electric-blue);
 }
 
-.history-table {
+.table-responsive {
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -1rem;
+    padding: 0 1rem;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     margin: 1rem 0;
+    min-width: 600px;
 }
 
 th, td {
-    padding: 0.75rem;
+    padding: 1rem;
     text-align: left;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -91,23 +100,136 @@ th, td {
 th {
     background: rgba(0, 0, 0, 0.2);
     color: var(--color-primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+tr:hover {
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .trend-down {
-    color: #4CAF50;
+    color: var(--neon-green);
+    text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
 }
 
 .trend-up {
-    color: #f44336;
+    color: var(--neon-pink);
+    text-shadow: 0 0 10px rgba(255, 0, 204, 0.5);
 }
 
 .trend-stable {
-    color: #FFC107;
+    color: var(--cyber-yellow);
+    text-shadow: 0 0 10px rgba(255, 231, 66, 0.5);
 }
 
 .actions {
     text-align: center;
     margin-top: 2rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--electric-blue), var(--neon-pink));
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(0, 204, 255, 0.4);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .analysis-container {
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+
+    .summary-box {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1.3rem;
+    }
+
+    .table-responsive {
+        margin: 0 -0.5rem;
+        padding: 0 0.5rem;
+    }
+
+    th, td {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    .btn-primary {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .analysis-container {
+        padding: 0.8rem;
+    }
+
+    .summary-box {
+        padding: 0.8rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    h3 {
+        font-size: 1.1rem;
+    }
+
+    th, td {
+        padding: 0.6rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.analysis-container {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.summary-box, .history-table {
+    animation: fadeIn 0.5s ease-out 0.2s both;
 }
 </style>
 {% endblock %} 

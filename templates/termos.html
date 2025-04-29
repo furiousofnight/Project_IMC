@@ -4,6 +4,7 @@
 
 {% block extra_css %}
 <style>
+    /* Estilos base */
     .terms-container {
         padding: 2rem;
         max-width: 1200px;
@@ -43,7 +44,8 @@
         padding: 2rem;
         margin-bottom: 2rem;
         transition: all 0.3s ease;
-        animation: fadeInUp 0.5s ease;
+        animation: fadeInUp 0.5s ease-out;
+        animation-fill-mode: both;
         backdrop-filter: blur(10px);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     }
@@ -127,10 +129,65 @@
         box-shadow: 0 0 20px rgba(255, 0, 204, 0.2);
     }
 
+    /* Animações */
     @keyframes pulseIcon {
         0% { transform: scale(1); }
         50% { transform: scale(1.1); }
         100% { transform: scale(1); }
+    }
+
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .terms-section:nth-child(1) { animation-delay: 0.1s; }
+    .terms-section:nth-child(2) { animation-delay: 0.2s; }
+    .terms-section:nth-child(3) { animation-delay: 0.3s; }
+    .terms-section:nth-child(4) { animation-delay: 0.4s; }
+    .terms-section:nth-child(5) { animation-delay: 0.5s; }
+    .terms-section:nth-child(6) { animation-delay: 0.6s; }
+
+    /* Responsividade */
+    @media (max-width: 1200px) {
+        .terms-container {
+            max-width: 95%;
+        }
+    }
+        
+    @media (max-width: 992px) {
+        .terms-title {
+            font-size: 3rem;
+        }
+        
+        .terms-section {
+            padding: 1.8rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+        }
+
+        .terms-content {
+            font-size: 1rem;
+        }
     }
 
     @media (max-width: 768px) {
@@ -138,22 +195,228 @@
             padding: 1rem;
         }
 
+        .terms-header {
+            margin-bottom: 2rem;
+        }
+        
         .terms-title {
             font-size: 2.5rem;
+        }
+        
+        .terms-subtitle {
+            font-size: 1.1rem;
         }
 
         .terms-section {
             padding: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .section-title {
+            font-size: 1.6rem;
+        }
+
+        .section-title i {
+            font-size: 1.4rem;
+        }
+        
+        .terms-content {
+            font-size: 0.95rem;
+        }
+
+        .highlight-box {
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .terms-container {
+            padding: 0.8rem;
+        }
+        
+        .terms-title {
+            font-size: 2rem;
+        }
+
+        .terms-subtitle {
+            font-size: 1rem;
+        }
+
+        .terms-section {
+            padding: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-title i {
+            font-size: 1.2rem;
+            margin-right: 0.8rem;
+        }
+
+        .terms-content {
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .terms-list li {
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .highlight-box {
+            padding: 1rem;
+            margin: 1.2rem 0;
+        }
+    }
+
+    @media (max-width: 360px) {
+        .terms-title {
             font-size: 1.8rem;
+        }
+        
+        .terms-subtitle {
+            font-size: 0.9rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+        }
+
+        .terms-content {
+            font-size: 0.85rem;
+        }
+    }
+
+    /* Ajustes para telas altas */
+    @media (min-height: 800px) {
+        .terms-container {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+    }
+
+    /* Ajustes para modo paisagem em dispositivos móveis */
+    @media (max-height: 600px) and (orientation: landscape) {
+        .terms-container {
+            margin: 0.5rem auto;
+        }
+
+        .terms-header {
+            margin-bottom: 1.5rem;
+        }
+        
+        .terms-section {
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+    }
+
+    /* Melhorias de interatividade */
+    .terms-list li {
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .terms-list li:hover {
+        transform: translateX(10px);
+        color: #2c3e50;
+    }
+
+    .highlight-box {
+        transition: all 0.3s ease;
+    }
+
+    .highlight-box:hover {
+        transform: scale(1.02);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    /* Ajustes para telas muito pequenas */
+    @media (max-width: 320px) {
+        .terms-container {
+            padding: 0.5rem;
+        }
+
+        .terms-title {
+            font-size: 1.6rem;
+        }
+
+        .terms-subtitle {
+            font-size: 0.85rem;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+        }
+
+        .section-title i {
+            font-size: 1rem;
+        }
+
+        .terms-content {
+            font-size: 0.8rem;
+        }
+
+        .terms-list li {
+            padding-left: 1.2rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .highlight-box {
+            padding: 0.8rem;
+            margin: 1rem 0;
+        }
+    }
+
+    /* Otimização para dispositivos com tela dobrável */
+    @media (min-width: 320px) and (max-width: 767px) and (min-height: 600px) {
+        .terms-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .terms-section {
+            margin-bottom: 0.8rem;
+        }
+    }
+
+    /* Melhorias para tablets */
+    @media (min-width: 768px) and (max-width: 1024px) {
+        .terms-container {
+            max-width: 90%;
+        }
+
+        .terms-section {
+            transition: transform 0.3s ease;
+        }
+
+        .terms-section:hover {
+            transform: translateY(-5px);
         }
     }
 </style>
 {% endblock %}
 
 {% block content %}
+<!-- Elementos de áudio -->
+<audio id="backgroundMusic" loop>
+    <source src="{{ url_for('static', filename='audio/background.mp3') }}" type="audio/mp3">
+</audio>
+<audio id="clickSound" preload="auto">
+    <source src="{{ url_for('static', filename='audio/click.mp3') }}" type="audio/mp3">
+</audio>
+
+<!-- Controle de áudio -->
+<div class="audio-control" onclick="toggleMusic()">
+    <i class="fas fa-volume-up"></i>
+</div>
+
 <div class="terms-container">
     <div class="terms-header">
         <h1 class="terms-title">Termos de Uso</h1>
@@ -248,4 +511,62 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let backgroundMusic = document.getElementById('backgroundMusic');
+    let clickSound = document.getElementById('clickSound');
+    let isPlaying = false;
+
+    // Configurar volume inicial
+    backgroundMusic.volume = 0.3;
+    clickSound.volume = 0.5;
+
+    // Verificar se a música estava tocando
+    const wasPlaying = localStorage.getItem('musicPlaying') === 'true';
+    const savedTime = parseFloat(localStorage.getItem('musicTime')) || 0;
+
+    if (wasPlaying) {
+        backgroundMusic.currentTime = savedTime;
+        backgroundMusic.play();
+        isPlaying = true;
+    }
+
+    function toggleMusic() {
+        const audioControl = document.querySelector('.audio-control');
+        if (isPlaying) {
+            backgroundMusic.pause();
+            audioControl.classList.add('muted');
+            localStorage.setItem('musicPlaying', 'false');
+        } else {
+            backgroundMusic.play();
+            audioControl.classList.remove('muted');
+            localStorage.setItem('musicPlaying', 'true');
+        }
+        isPlaying = !isPlaying;
+    }
+
+    // Som de clique para todos os botões
+    document.querySelectorAll('button, .btn, .terms-section').forEach(element => {
+        element.addEventListener('click', () => {
+            clickSound.currentTime = 0;
+            clickSound.play();
+            element.classList.add('button-click');
+            setTimeout(() => element.classList.remove('button-click'), 100);
+        });
+    });
+
+    // Salvar estado da música antes de navegar
+    window.addEventListener('beforeunload', () => {
+        if (isPlaying) {
+            localStorage.setItem('musicPlaying', 'true');
+            localStorage.setItem('musicTime', backgroundMusic.currentTime);
+        } else {
+            localStorage.setItem('musicPlaying', 'false');
+        }
+    });
+});
+</script>
 {% endblock %} 
