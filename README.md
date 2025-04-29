@@ -213,7 +213,7 @@ git push origin feature/AmazingFeature
 **FURIOUSOFNIGHT**
 
 - 🎮 TikTok: [@furiousofnightgames](https://www.tiktok.com/@furiousofnightgames)
-- 💻 GitHub: [@seu-usuario](https://github.com/seu-usuario)
+- 💻 GitHub: [@furiousofnight](https://github.com/furiousofnight)
 
 ## 📝 Licença
 
