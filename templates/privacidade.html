@@ -1,0 +1,304 @@
+{% extends "base.html" %}
+
+{% block title %}Política de Privacidade - SUPER PERFORMANCE{% endblock %}
+
+{% block extra_css %}
+<style>
+    .privacy-container {
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+    }
+
+    .privacy-header {
+        text-align: center;
+        margin-bottom: 4rem;
+        animation: fadeInDown 1s ease;
+    }
+
+    .privacy-title {
+        font-size: 3.5rem;
+        background: linear-gradient(45deg, var(--neon-pink), var(--electric-blue));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 1rem;
+        text-shadow: 0 0 30px rgba(255, 0, 204, 0.7);
+        font-weight: 800;
+    }
+
+    .privacy-subtitle {
+        color: var(--wolf-fur);
+        font-size: 1.3rem;
+        opacity: 1;
+        text-shadow: 0 0 10px rgba(191, 199, 213, 0.5);
+    }
+
+    .privacy-section {
+        background: rgba(20, 20, 35, 0.95);
+        border: 2px solid var(--electric-blue);
+        border-radius: 15px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        transition: all 0.3s ease;
+        animation: fadeInUp 0.5s ease;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .privacy-section:hover {
+        transform: translateY(-5px);
+        border-color: var(--neon-pink);
+        box-shadow: 0 0 30px rgba(255, 0, 204, 0.3);
+    }
+
+    .section-title {
+        font-size: 2rem;
+        color: var(--electric-blue);
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        text-shadow: 0 0 15px rgba(0, 204, 255, 0.5);
+    }
+
+    .section-title i {
+        margin-right: 1rem;
+        font-size: 1.8rem;
+        animation: pulseIcon 2s infinite;
+    }
+
+    .privacy-content {
+        color: var(--wolf-fur);
+        font-size: 1.1rem;
+        line-height: 1.8;
+        letter-spacing: 0.5px;
+    }
+
+    .privacy-content p {
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .privacy-content p:hover {
+        color: var(--color-text-bright);
+        transform: translateX(10px);
+    }
+
+    .privacy-list {
+        list-style: none;
+        padding: 0;
+        margin: 1.5rem 0;
+    }
+
+    .privacy-list li {
+        margin-bottom: 1rem;
+        padding-left: 2rem;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .privacy-list li::before {
+        content: '⚡';
+        position: absolute;
+        left: 0;
+        color: var(--neon-pink);
+        text-shadow: 0 0 10px rgba(255, 0, 204, 0.5);
+    }
+
+    .privacy-list li:hover {
+        transform: translateX(10px);
+        color: var(--color-text-bright);
+    }
+
+    .highlight-box {
+        background: rgba(255, 255, 255, 0.05);
+        border-left: 4px solid var(--neon-pink);
+        padding: 1.5rem;
+        margin: 2rem 0;
+        border-radius: 0 15px 15px 0;
+        transition: all 0.3s ease;
+    }
+
+    .highlight-box:hover {
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateX(10px);
+        box-shadow: 0 0 20px rgba(255, 0, 204, 0.2);
+    }
+
+    @keyframes pulseIcon {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+
+    @media (max-width: 768px) {
+        .privacy-container {
+            padding: 1rem;
+        }
+
+        .privacy-title {
+            font-size: 2.5rem;
+        }
+
+        .privacy-section {
+            padding: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+        }
+    }
+
+    .contact-link {
+        color: var(--electric-blue);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .contact-link:hover {
+        color: var(--neon-pink);
+        text-shadow: 0 0 10px rgba(255, 0, 204, 0.5);
+    }
+
+    .contact-link::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        bottom: -2px;
+        left: 0;
+        background: linear-gradient(90deg, var(--electric-blue), var(--neon-pink));
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.3s ease;
+    }
+
+    .contact-link:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+    }
+
+    .social-button-container {
+        display: flex;
+        justify-content: center;
+        margin: 2rem 0;
+    }
+
+    .tiktok-button {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 2rem;
+        background: linear-gradient(45deg, var(--neon-pink), var(--electric-blue));
+        color: var(--color-text-bright);
+        text-decoration: none;
+        border-radius: 50px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        box-shadow: 0 0 20px rgba(255, 0, 204, 0.3);
+    }
+
+    .tiktok-button:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 0 30px rgba(255, 0, 204, 0.5);
+        border-color: var(--neon-pink);
+    }
+
+    .tiktok-button i {
+        font-size: 1.5rem;
+        animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="privacy-container">
+    <div class="privacy-header">
+        <h1 class="privacy-title">Política de Privacidade</h1>
+        <p class="privacy-subtitle">Sua privacidade é nossa prioridade</p>
+    </div>
+
+    <div class="privacy-section">
+        <h2 class="section-title">
+            <i class="fas fa-shield-alt"></i>
+            Compromisso com sua Privacidade
+        </h2>
+        <div class="privacy-content">
+            <p>A SUPER PERFORMANCE está comprometida em proteger sua privacidade e seus dados pessoais. Esta política descreve como coletamos, usamos e protegemos suas informações.</p>
+            
+            <div class="highlight-box">
+                <p>Seus dados são criptografados e armazenados com segurança em nossos servidores, utilizando as mais avançadas tecnologias de proteção disponíveis.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="privacy-section">
+        <h2 class="section-title">
+            <i class="fas fa-database"></i>
+            Dados que Coletamos
+        </h2>
+        <div class="privacy-content">
+            <ul class="privacy-list">
+                <li>Informações temporárias para cálculo (nome, idade, sexo)</li>
+                <li>Medidas corporais temporárias (peso, altura)</li>
+                <li>Nível de atividade física</li>
+            </ul>
+            <div class="highlight-box">
+                <p>Importante: Estes dados são utilizados apenas durante a sessão atual para realizar os cálculos necessários. Não mantemos um histórico ou banco de dados permanente com suas informações.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="privacy-section">
+        <h2 class="section-title">
+            <i class="fas fa-user-shield"></i>
+            Como Protegemos seus Dados
+        </h2>
+        <div class="privacy-content">
+            <ul class="privacy-list">
+                <li>Criptografia de ponta a ponta</li>
+                <li>Armazenamento seguro em servidores protegidos</li>
+                <li>Acesso restrito apenas a pessoal autorizado</li>
+                <li>Atualizações regulares de segurança</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="privacy-section">
+        <h2 class="section-title">
+            <i class="fas fa-cog"></i>
+            Seus Direitos
+        </h2>
+        <div class="privacy-content">
+            <div class="highlight-box">
+                <p>Seus dados não são armazenados permanentemente em nosso sistema. Cada vez que você utiliza o serviço, é necessário preencher um novo formulário.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="privacy-section">
+        <h2 class="section-title">
+            <i class="fas fa-envelope"></i>
+            Contato
+        </h2>
+        <div class="privacy-content">
+            <div class="social-button-container">
+                <a href="https://www.tiktok.com/@furiousofnightgames" target="_blank" rel="noopener noreferrer" class="tiktok-button">
+                    <i class="fab fa-tiktok"></i>
+                    @furiousofnightgames
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

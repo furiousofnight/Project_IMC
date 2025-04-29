@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Página Não Encontrada - FURIOUSOFNIGHT{% endblock %}
+
+{% block styles %}
+<style>
+    .error-container {
+        text-align: center;
+        padding: 50px 0;
+    }
+    .error-code {
+        font-size: 72px;
+        color: #007bff;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    .error-message {
+        font-size: 24px;
+        color: #495057;
+        margin-bottom: 30px;
+    }
+    .btn-home {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 30px;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+    .btn-home:hover {
+        background-color: #0056b3;
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="error-container">
+        <div class="error-code">404</div>
+        <div class="error-message">Página Não Encontrada</div>
+        <p>A página que você está procurando não existe ou foi movida.</p>
+        <a href="{{ url_for('home') }}" class="btn-home">Voltar para a Página Inicial</a>
+    </div>
+</div>
+{% endblock %} 

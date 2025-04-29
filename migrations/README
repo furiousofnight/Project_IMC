@@ -1,0 +1,18 @@
+Diretório de Migrações Genérico
+
+Este diretório contém scripts de migração de banco de dados.
+
+Para gerar uma nova migração:
+    alembic revision -m "descrição da migração"
+
+Para aplicar todas as migrações pendentes:
+    alembic upgrade head
+
+Para reverter a última migração:
+    alembic downgrade -1
+
+Para ver o histórico de migrações:
+    alembic history --verbose
+
+Para mais informações sobre o Alembic, visite:
+https://alembic.sqlalchemy.org/en/latest/ 

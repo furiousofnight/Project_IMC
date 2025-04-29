@@ -1,33 +1,496 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultado do IMC - FURIOUSOFNIGHT</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <img src="/static/img/logo.png" alt="Logo da FURIOUSOFNIGHT" style="width: 150px; display: block; margin: 0 auto;">
-            <h1>Resultado do Seu IMC</h1>
-        </header>
+{% extends "base.html" %}
 
-        <div class="result-container">
-            <h2>{{ resultado }}</h2>
-            <div class="result-box">
-                <p><strong>Categoria:</strong> {{ categoria }}</p>
-                <p><strong>Risco à Saúde:</strong> {{ risco_saude }}</p>
-                <p><strong>Recomendações Alimentares:</strong> {{ recomendacao_alimentos }}</p>
-                <p><strong>Recomendações de Exercício:</strong> {{ recomendacao_exercicio }}</p>
-                <p><strong>Cuidados Médicos:</strong> {{ recomendacao_medica }}</p>
+{% block title %}Resultado - SUPER PERFORMANCE{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Estilos para tela */
+    .result-container {
+        background: rgba(20, 20, 35, 0.95);
+        border-radius: 15px;
+        padding: 2rem;
+        margin: 2rem auto;
+        box-shadow: 0 0 30px rgba(0, 204, 255, 0.2);
+    }
+
+    .result-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .brand-name {
+        font-size: 3rem;
+        background: linear-gradient(45deg, var(--neon-pink), var(--electric-blue));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 1rem;
+    }
+
+    .metric-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 2px solid var(--electric-blue);
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        transition: all 0.3s ease;
+    }
+
+    .metric-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--neon-pink);
+        box-shadow: 0 0 20px rgba(255, 0, 204, 0.2);
+    }
+
+    .metric-header {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .result-value {
+        font-size: 3.5rem;
+        font-weight: 800;
+        color: var(--cyber-yellow);
+        text-shadow: 0 0 15px rgba(255, 231, 66, 0.5);
+        margin: 1rem 0;
+    }
+
+    .classification {
+        font-size: 1.8rem;
+        color: var(--neon-pink);
+        text-shadow: 0 0 10px rgba(255, 0, 204, 0.3);
+        margin-top: 1rem;
+    }
+
+    .progress-container {
+        margin: 2rem 0;
+        position: relative;
+    }
+
+    .progress {
+        height: 25px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        overflow: hidden;
+        border: 1px solid var(--electric-blue);
+        position: relative;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background: linear-gradient(90deg, var(--neon-green), var(--electric-blue), var(--neon-pink));
+        background-size: 200% 100%;
+        animation: gradientMove 3s linear infinite;
+        transition: width 0.3s ease;
+    }
+
+    /* Adicionar classe dinâmica para largura da barra de progresso */
+    .progress-bar-width {
+        width: var(--progress-width);
+    }
+
+    .progress-labels {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 0.5rem;
+        color: var(--wolf-fur);
+        font-size: 0.9rem;
+    }
+
+    .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin: 3rem 0;
+    }
+
+    .metric-icon {
+        font-size: 2.5rem;
+        color: var(--electric-blue);
+        margin-bottom: 1rem;
+    }
+
+    .metric-value {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--cyber-yellow);
+        margin: 1rem 0;
+    }
+
+    .metric-detail {
+        color: var(--wolf-fur);
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+
+    .recommendations-section {
+        margin: 3rem 0;
+    }
+
+    .recommendation-box {
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 12px;
+        padding: 2rem;
+        margin: 1.5rem 0;
+        border-left: 4px solid var(--electric-blue);
+    }
+
+    .recommendation-box h4 {
+        color: var(--electric-blue);
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .recommendation-box.nutricional {
+        border-left-color: var(--neon-green);
+    }
+
+    .recommendation-box.exercicios {
+        border-left-color: var(--neon-pink);
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 3rem;
+    }
+
+    .btn {
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    /* Estilos específicos para impressão */
+    @media print {
+        body {
+            background: white !important;
+            color: black !important;
+        }
+
+        .result-container {
+            background: white !important;
+            box-shadow: none !important;
+            border: 2px solid #333 !important;
+            padding: 20px !important;
+        }
+
+        .brand-name {
+            color: #333 !important;
+            -webkit-text-fill-color: #333 !important;
+            text-shadow: none !important;
+        }
+
+        .metric-card {
+            border: 2px solid #333 !important;
+            break-inside: avoid !important;
+            background: white !important;
+            page-break-inside: avoid !important;
+            color: black !important;
+        }
+
+        .result-value, .metric-value {
+            color: #000 !important;
+            -webkit-text-fill-color: #000 !important;
+            text-shadow: none !important;
+        }
+
+        .classification {
+            color: #333 !important;
+            text-shadow: none !important;
+        }
+
+        .progress {
+            border: 2px solid #333 !important;
+            print-color-adjust: exact !important;
+            -webkit-print-color-adjust: exact !important;
+        }
+
+        .progress-bar {
+            background: #333 !important;
+            print-color-adjust: exact !important;
+            -webkit-print-color-adjust: exact !important;
+        }
+
+        .metric-icon {
+            color: #333 !important;
+        }
+
+        .metric-detail {
+            color: #333 !important;
+        }
+
+        .recommendation-box {
+            border: 2px solid #333 !important;
+            border-left: 4px solid #333 !important;
+            background: white !important;
+            color: black !important;
+            break-inside: avoid !important;
+            page-break-inside: avoid !important;
+        }
+
+        .recommendation-box h4 {
+            color: #333 !important;
+        }
+
+        .action-buttons {
+            display: none !important;
+        }
+
+        /* Adicionar informações de rodapé na impressão */
+        @page {
+            margin: 2cm;
+        }
+
+        .print-footer {
+            display: block !important;
+            text-align: center;
+            font-size: 12px;
+            margin-top: 30px;
+            border-top: 1px solid #333;
+            padding-top: 10px;
+        }
+    }
+
+    /* Adicionando animações faltantes */
+    @keyframes gradientMove {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .animate-on-scroll.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .toast {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        z-index: 1000;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .toast.show {
+        opacity: 1;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="result-container animate-on-scroll">
+        <div class="result-header">
+            <h1 class="brand-name">SUPER PERFORMANCE</h1>
+            <h2>Resultado da Análise</h2>
+            <p class="lead">Olá {{ nome }}, confira seus resultados detalhados abaixo:</p>
+        </div>
+
+        <!-- Card Principal do IMC -->
+        <div class="metric-card primary-result animate-on-scroll">
+            <div class="metric-header">
+                <h3>Seu IMC é:</h3>
+                <div class="result-value" title="Clique para copiar">{{ "%.1f"|format(imc) }}</div>
+                <div class="classification">{{ categoria }}</div>
+            </div>
+            
+            <!-- Barra de Progresso do IMC -->
+            <div class="progress-container">
+                <div class="progress">
+                    {% set progress_width = ((imc - 16) / (40 - 16)) * 100 %}
+                    {% set rounded_width = progress_width|round(0, 'floor')|int %}
+                    {% if rounded_width < 0 %}{% set rounded_width = 0 %}{% endif %}
+                    {% if rounded_width > 100 %}{% set rounded_width = 100 %}{% endif %}
+                    <div class="progress-bar progress-bar-width" style="--progress-width: {{ rounded_width }}%"></div>
+                </div>
+                <div class="progress-labels">
+                    <span>16</span>
+                    <span>40</span>
+                </div>
             </div>
         </div>
 
-        <footer>
-            &copy; 2025 FURIOUSOFNIGHT | Criado com ❤️ e comprometimento pela equipe <span>FURIOUSOFNIGHT</span>. <br>
-            <a href="https://www.tiktok.com/@furiousofnightgames" target="_blank">Acesse nossos conteúdos</a>
-        </footer>
+        <!-- Grid de Métricas -->
+        <div class="metrics-grid">
+            <!-- Peso Ideal -->
+            <div class="metric-card animate-on-scroll">
+                <i class="fas fa-balance-scale metric-icon"></i>
+                <h4>Peso Ideal</h4>
+                <div class="metric-value">{{ "%.1f"|format(peso_ideal_min) }} - {{ "%.1f"|format(peso_ideal_max) }} kg</div>
+                <div class="metric-detail">
+                    {% set peso_ideal_medio = (peso_ideal_min + peso_ideal_max) / 2 %}
+                    {% if peso > peso_ideal_medio %}
+                        Você está {{ "%.1f"|format(peso - peso_ideal_medio) }}kg acima do peso ideal
+                    {% elif peso < peso_ideal_medio %}
+                        Você está {{ "%.1f"|format(peso_ideal_medio - peso) }}kg abaixo do peso ideal
+                    {% else %}
+                        Você está no peso ideal
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Composição Corporal -->
+            <div class="metric-card animate-on-scroll">
+                <i class="fas fa-percentage metric-icon"></i>
+                <h4>Composição Corporal</h4>
+                <div class="metric-value">{{ "%.1f"|format(gordura_corporal) }}% Gordura</div>
+                <div class="metric-detail">
+                    Massa Magra: {{ "%.1f"|format(massa_magra) }}kg<br>
+                    Classificação: {{ classificacao_gordura }}
+                </div>
+            </div>
+
+            <!-- Gasto Calórico -->
+            <div class="metric-card animate-on-scroll">
+                <i class="fas fa-fire metric-icon"></i>
+                <h4>Gasto Calórico</h4>
+                <div class="metric-value">{{ gasto_calorico|int }} kcal/dia</div>
+                <div class="metric-detail">
+                    Metabolismo Basal: {{ tmb|int }} kcal/dia<br>
+                    Nível de Atividade: {{ nivel_atividade|title }}
+                </div>
+            </div>
+
+            <!-- Hidratação -->
+            <div class="metric-card animate-on-scroll">
+                <i class="fas fa-tint metric-icon"></i>
+                <h4>Hidratação Recomendada</h4>
+                <div class="metric-value">{{ "%.1f"|format(agua_diaria) }} L/dia</div>
+                <div class="metric-detail">
+                    Recomendação baseada no seu peso e nível de atividade física
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção de Recomendações -->
+        <div class="recommendations-section animate-on-scroll">
+            <h3>Recomendações Personalizadas</h3>
+            
+            <!-- Plano Nutricional -->
+            <div class="recommendation-box nutricional">
+                <h4><i class="fas fa-utensils"></i> Plano Nutricional</h4>
+                {{ plano_nutricional|safe }}
+            </div>
+
+            <!-- Plano de Exercícios -->
+            <div class="recommendation-box exercicios">
+                <h4><i class="fas fa-dumbbell"></i> Plano de Exercícios</h4>
+                {{ plano_exercicios|safe }}
+            </div>
+        </div>
+
+        <!-- Botões de Ação -->
+        <div class="action-buttons animate-on-scroll">
+            <button onclick="window.print()" class="btn btn-secondary">
+                <i class="fas fa-print"></i> Imprimir Resultados
+            </button>
+            <a href="{{ url_for('historico') }}" class="btn btn-info">
+                <i class="fas fa-history"></i> Ver Histórico
+            </a>
+            <a href="{{ url_for('home') }}" class="btn btn-primary">
+                <i class="fas fa-calculator"></i> Calcular Novamente
+            </a>
+        </div>
+
+        <!-- Rodapé para impressão -->
+        <div class="print-footer" style="display: none;">
+            <p>Relatório gerado em {{ data_atual }}</p>
+            <p>SUPER PERFORMANCE - Sua análise corporal completa</p>
+        </div>
     </div>
-</body>
-</html>
+</div>
+
+<!-- Toast para notificações -->
+<div id="toast" class="toast"></div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Primeiro definimos as variáveis do Flask como variáveis JavaScript
+    const flaskData = {
+        imc: Number('{{ imc }}'),
+        peso: Number('{{ peso }}'),
+        altura: Number('{{ altura }}'),
+        categoria: '{{ categoria }}',
+        gorduraCorporal: Number('{{ gordura_corporal }}'),
+        gastoCalorico: Number('{{ gasto_calorico }}'),
+        nome: '{{ nome }}',
+        idade: Number('{{ idade }}'),
+        sexo: '{{ sexo }}',
+        nivelAtividade: '{{ nivel_atividade }}'
+    };
+
+    // Salvar resultados no localStorage
+    const resultData = {
+        date: new Date().toISOString(),
+        ...flaskData
+    };
+
+    // Recuperar histórico existente
+    const history = JSON.parse(localStorage.getItem('imcHistory') || '[]');
+    
+    // Adicionar novo resultado
+    history.unshift(resultData);
+    
+    // Manter apenas os últimos 50 registros
+    if (history.length > 50) {
+        history.pop();
+    }
+    
+    // Salvar histórico atualizado
+    localStorage.setItem('imcHistory', JSON.stringify(history));
+
+    // Função para copiar valores ao clicar
+    const resultValues = document.querySelectorAll('.result-value');
+    resultValues.forEach(value => {
+        value.addEventListener('click', function() {
+            const text = this.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Valor copiado para a área de transferência!');
+            });
+        });
+    });
+
+    // Função para mostrar toast
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+
+    // Animação ao rolar
+    const animateElements = document.querySelectorAll('.animate-on-scroll');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    });
+
+    animateElements.forEach(element => {
+        observer.observe(element);
+    });
+});
+</script>
+{% endblock %}

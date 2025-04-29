@@ -1,42 +1,290 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de IMC - FURIOUSOFNIGHT</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <img src="/static/img/logo.png" alt="Logo FURIOUSOFNIGHT" style="width: 150px; display: block; margin: 0 auto;">
-            <h1>IMC FURIOUSOFNIGHT</h1>
-            <p>Sua saúde em boas mãos!</p>
-        </header>
+{% extends "base.html" %}
 
-        {% if erro %}
-        <div class="error">
-            {{ erro }}
+{% block title %}SUPER PERFORMANCE{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --glass-bg: rgba(20, 20, 35, 0.95);
+        --glass-border: rgba(0, 204, 255, 0.3);
+        --glass-shadow: rgba(0, 0, 0, 0.2);
+        --wolf-fur: #bfc7d5;
+        --cyber-yellow: #ffe600;
+        --electric-blue: #00ccff;
+        --neon-pink: #ff00cc;
+    }
+
+    .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Removendo a película do fundo */
+    body::before {
+        opacity: 0.2;
+        background: 
+            radial-gradient(circle at 20% 20%, rgba(79, 70, 229, 0.4) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(255, 27, 107, 0.4) 0%, transparent 50%);
+    }
+
+    .card {
+        background: var(--glass-bg);
+        border: 2px solid var(--glass-border);
+        box-shadow: 0 8px 32px var(--glass-shadow);
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, #1e1e3c, #292959) !important;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4) !important;
+        text-align: center !important;
+        padding: 2.5rem !important;
+        border: none !important;
+    }
+
+    .brand-name {
+        color: var(--cyber-yellow) !important;
+        font-size: 2.5rem !important;
+        font-weight: 800 !important;
+        text-shadow: 0 0 15px rgba(255, 231, 66, 0.5);
+        -webkit-text-fill-color: var(--cyber-yellow) !important;
+        margin-bottom: 1rem !important;
+    }
+
+    .card-header h2 {
+        font-size: 3.6rem !important;
+        font-weight: bold !important;
+        background: linear-gradient(90deg, #ff007b, #ffda00) !important;
+        -webkit-background-clip: text !important;
+        background-clip: text !important;
+        color: transparent !important;
+        text-shadow: 0 3px 8px rgba(255, 0, 123, 0.5) !important;
+        animation: glow 1.8s infinite alternate !important;
+        margin: 1rem 0 !important;
+    }
+
+    @keyframes glow {
+        0% {
+            text-shadow: 0 2px 10px rgba(255, 0, 123, 0.3);
+        }
+        100% {
+            text-shadow: 0 4px 20px rgba(255, 0, 123, 0.7);
+        }
+    }
+
+    .card-header h2::before {
+        content: '';
+        position: absolute;
+        left: -2px;
+        top: -2px;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, 
+            #ff0000, 
+            #ff8800, 
+            #ffff00, 
+            #00ff00, 
+            #00ffff, 
+            #0000ff, 
+            #ff00ff
+        ) !important;
+        background-size: 400% !important;
+        filter: blur(15px);
+        opacity: 0.7;
+        z-index: -1;
+        animation: rainbowText 8s linear infinite !important;
+    }
+
+    @keyframes rainbowText {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    @keyframes textFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+    }
+
+    .form-group {
+        margin-bottom: 2rem;
+    }
+
+    .form-label {
+        color: var(--cyber-yellow) !important;
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
+        text-shadow: 0 0 8px rgba(255, 231, 66, 0.3);
+        -webkit-text-fill-color: var(--cyber-yellow) !important;
+        margin-bottom: 0.8rem !important;
+        opacity: 1 !important;
+    }
+
+    .custom-input,
+    select.form-control {
+        background: rgba(20, 20, 35, 0.98) !important;
+        border: 2px solid var(--electric-blue) !important;
+        color: #ffffff !important;
+        font-weight: 500 !important;
+        -webkit-text-fill-color: #ffffff !important;
+        box-shadow: 0 5px 15px rgba(0, 204, 255, 0.2) !important;
+    }
+
+    .custom-input:focus,
+    select.form-control:focus {
+        border-color: var(--neon-pink) !important;
+        box-shadow: 0 8px 25px rgba(255, 27, 107, 0.3) !important;
+    }
+
+    .custom-input::placeholder {
+        color: rgba(255, 255, 255, 0.5) !important;
+        -webkit-text-fill-color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    select.form-control option {
+        background: rgba(20, 20, 35, 0.98) !important;
+        color: #ffffff !important;
+        font-weight: 500 !important;
+    }
+
+    .btn-primary {
+        background: linear-gradient(45deg, var(--electric-blue), var(--neon-pink)) !important;
+        border: none !important;
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 5px 15px rgba(0, 204, 255, 0.3);
+        padding: 1rem 2.5rem !important;
+        font-size: 1.2rem !important;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(255, 27, 107, 0.4);
+    }
+
+    .alert {
+        background: rgba(255, 27, 107, 0.2) !important;
+        border: 2px solid var(--neon-pink) !important;
+        color: #ffffff !important;
+        font-weight: 500 !important;
+        text-shadow: 0 0 10px rgba(255, 27, 107, 0.3);
+    }
+
+    .logo {
+        width: 220px !important;
+        height: auto !important;
+        margin: 0 auto 2rem !important;
+        display: block !important;
+    }
+
+    .form-text {
+        color: var(--wolf-fur) !important;
+        font-size: 0.9rem !important;
+        margin-top: 0.5rem !important;
+        display: block !important;
+        opacity: 0.8 !important;
+        text-shadow: none !important;
+        -webkit-text-fill-color: var(--wolf-fur) !important;
+    }
+
+    .form-group:hover .form-text {
+        opacity: 1 !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo">
+                    <h2>SUPER PERFORMANCE</h2>
+                </div>
+                <div class="card-body">
+                    {% if erro %}
+                    <div class="alert" role="alert">
+                        {{ erro }}
+                    </div>
+                    {% endif %}
+                    
+                    <form action="{{ url_for('calcular') }}" method="POST" class="needs-validation" novalidate>
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="nome" class="form-label">Nome</label>
+                                    <input type="text" class="custom-input" id="nome" name="nome" required 
+                                           minlength="2" maxlength="100" autocomplete="name"
+                                           aria-describedby="nomeHelp">
+                                    <small id="nomeHelp" class="form-text">Digite seu nome completo</small>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="idade" class="form-label">Idade</label>
+                                    <input type="number" class="custom-input" id="idade" name="idade" required
+                                           min="1" max="120" step="1" autocomplete="off"
+                                           aria-describedby="idadeHelp">
+                                    <small id="idadeHelp" class="form-text">Idade em anos</small>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="peso" class="form-label">Peso (kg)</label>
+                                    <input type="number" class="custom-input" id="peso" name="peso" required
+                                           min="1" max="300" step="0.1" autocomplete="off"
+                                           aria-describedby="pesoHelp">
+                                    <small id="pesoHelp" class="form-text">Peso em quilogramas</small>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="altura" class="form-label">Altura (m)</label>
+                                    <input type="number" class="custom-input" id="altura" name="altura" required
+                                           min="0.5" max="3" step="0.01" autocomplete="off"
+                                           aria-describedby="alturaHelp">
+                                    <small id="alturaHelp" class="form-text">Altura em metros (ex: 1.75)</small>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="sexo" class="form-label">Sexo</label>
+                                    <select class="form-control" id="sexo" name="sexo" required
+                                            aria-describedby="sexoHelp">
+                                        <option value="" disabled selected>Selecione...</option>
+                                        <option value="masculino">Masculino</option>
+                                        <option value="feminino">Feminino</option>
+                                    </select>
+                                    <small id="sexoHelp" class="form-text">Sexo biológico para cálculos metabólicos</small>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="nivel_atividade" class="form-label">Nível de Atividade</label>
+                                    <select class="form-control" id="nivel_atividade" name="nivel_atividade" required
+                                            aria-describedby="atividadeHelp">
+                                        <option value="" disabled selected>Selecione...</option>
+                                        <option value="sedentario">Sedentário</option>
+                                        <option value="leve">Atividade Leve</option>
+                                        <option value="moderado">Atividade Moderada</option>
+                                        <option value="intenso">Atividade Intensa</option>
+                                        <option value="muito_intenso">Atividade Muito Intensa</option>
+                                    </select>
+                                    <small id="atividadeHelp" class="form-text">Seu nível habitual de atividade física</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary" id="submitBtn">
+                                <i class="fas fa-calculator me-2"></i>Calcular
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        {% endif %}
-
-        <form method="POST" action="/calcular">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
-
-            <label for="peso">Peso (em kg):</label>
-            <input type="number" step="0.1" id="peso" name="peso" placeholder="Ex.: 70.5" required>
-
-            <label for="altura">Altura (em metros):</label>
-            <input type="number" step="0.01" id="altura" name="altura" placeholder="Ex.: 1.75" required>
-
-            <button type="submit">Calcular IMC</button>
-        </form>
     </div>
-
-    <footer>
-        &copy; 2025 FURIOUSOFNIGHT | Desenvolvido com ❤️ por nossa equipe. <br>
-        <a href="https://www.tiktok.com/@furiousofnightgames" target="_blank">Explore nossos conteúdos</a>
-    </footer>
-</body>
-</html>
+</div>
+{% endblock %}

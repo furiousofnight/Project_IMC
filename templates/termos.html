@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+
+{% block title %}Termos de Uso - SUPER PERFORMANCE{% endblock %}
+
+{% block extra_css %}
+<style>
+    .terms-container {
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+    }
+
+    .terms-header {
+        text-align: center;
+        margin-bottom: 4rem;
+        animation: fadeInDown 1s ease;
+    }
+
+    .terms-title {
+        font-size: 3.5rem;
+        background: linear-gradient(45deg, var(--neon-pink), var(--electric-blue));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 1rem;
+        text-shadow: 0 0 30px rgba(255, 0, 204, 0.7);
+        font-weight: 800;
+    }
+
+    .terms-subtitle {
+        color: var(--wolf-fur);
+        font-size: 1.3rem;
+        opacity: 1;
+        text-shadow: 0 0 10px rgba(191, 199, 213, 0.5);
+    }
+
+    .terms-section {
+        background: rgba(20, 20, 35, 0.95);
+        border: 2px solid var(--electric-blue);
+        border-radius: 15px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        transition: all 0.3s ease;
+        animation: fadeInUp 0.5s ease;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .terms-section:hover {
+        transform: translateY(-5px);
+        border-color: var(--neon-pink);
+        box-shadow: 0 0 30px rgba(255, 0, 204, 0.3);
+    }
+
+    .section-title {
+        font-size: 2rem;
+        color: var(--electric-blue);
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        text-shadow: 0 0 15px rgba(0, 204, 255, 0.5);
+    }
+
+    .section-title i {
+        margin-right: 1rem;
+        font-size: 1.8rem;
+        animation: pulseIcon 2s infinite;
+    }
+
+    .terms-content {
+        color: var(--wolf-fur);
+        font-size: 1.1rem;
+        line-height: 1.8;
+        letter-spacing: 0.5px;
+    }
+
+    .terms-content p {
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .terms-content p:hover {
+        color: var(--color-text-bright);
+        transform: translateX(10px);
+    }
+
+    .terms-list {
+        list-style: none;
+        padding: 0;
+        margin: 1.5rem 0;
+    }
+
+    .terms-list li {
+        margin-bottom: 1rem;
+        padding-left: 2rem;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .terms-list li::before {
+        content: '⚡';
+        position: absolute;
+        left: 0;
+        color: var(--neon-pink);
+        text-shadow: 0 0 10px rgba(255, 0, 204, 0.5);
+    }
+
+    .terms-list li:hover {
+        transform: translateX(10px);
+        color: var(--color-text-bright);
+    }
+
+    .highlight-box {
+        background: rgba(255, 255, 255, 0.05);
+        border-left: 4px solid var(--neon-pink);
+        padding: 1.5rem;
+        margin: 2rem 0;
+        border-radius: 0 15px 15px 0;
+        transition: all 0.3s ease;
+    }
+
+    .highlight-box:hover {
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateX(10px);
+        box-shadow: 0 0 20px rgba(255, 0, 204, 0.2);
+    }
+
+    @keyframes pulseIcon {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+
+    @media (max-width: 768px) {
+        .terms-container {
+            padding: 1rem;
+        }
+
+        .terms-title {
+            font-size: 2.5rem;
+        }
+
+        .terms-section {
+            padding: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="terms-container">
+    <div class="terms-header">
+        <h1 class="terms-title">Termos de Uso</h1>
+        <p class="terms-subtitle">Conheça as regras e condições de uso da nossa plataforma</p>
+    </div>
+
+    <div class="terms-section">
+        <h2 class="section-title">
+            <i class="fas fa-file-contract"></i>
+            Aceitação dos Termos
+        </h2>
+        <div class="terms-content">
+            <p>Ao utilizar a SUPER PERFORMANCE, você concorda com estes termos de uso. Por favor, leia-os atentamente.</p>
+            
+            <div class="highlight-box">
+                <p>O uso continuado de nossos serviços constitui a aceitação de quaisquer alterações ou modificações feitas nestes termos.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="terms-section">
+        <h2 class="section-title">
+            <i class="fas fa-user-check"></i>
+            Uso do Serviço
+        </h2>
+        <div class="terms-content">
+            <ul class="terms-list">
+                <li>O serviço é fornecido "como está", sem garantias</li>
+                <li>Você é responsável pela precisão dos dados fornecidos</li>
+                <li>O uso é pessoal e intransferível</li>
+                <li>Não é permitido usar o serviço para fins ilegais</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="terms-section">
+        <h2 class="section-title">
+            <i class="fas fa-exclamation-triangle"></i>
+            Limitações de Responsabilidade
+        </h2>
+        <div class="terms-content">
+            <ul class="terms-list">
+                <li>Os resultados são estimativas e não substituem avaliação profissional</li>
+                <li>Não nos responsabilizamos por decisões tomadas com base nos resultados</li>
+                <li>Consulte profissionais de saúde para orientações específicas</li>
+            </ul>
+            
+            <div class="highlight-box">
+                <p>As recomendações fornecidas são genéricas e não substituem o acompanhamento médico ou nutricional.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="terms-section">
+        <h2 class="section-title">
+            <i class="fas fa-copyright"></i>
+            Propriedade Intelectual
+        </h2>
+        <div class="terms-content">
+            <ul class="terms-list">
+                <li>Todo o conteúdo é protegido por direitos autorais</li>
+                <li>Não é permitida a cópia ou reprodução sem autorização</li>
+                <li>O nome e logo são marcas registradas</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="terms-section">
+        <h2 class="section-title">
+            <i class="fas fa-gavel"></i>
+            Alterações nos Termos
+        </h2>
+        <div class="terms-content">
+            <p>Reservamo-nos o direito de modificar estes termos a qualquer momento. Alterações significativas serão notificadas aos usuários.</p>
+            
+            <div class="highlight-box">
+                <p>É sua responsabilidade verificar periodicamente os termos para se manter informado sobre atualizações.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="terms-section">
+        <h2 class="section-title">
+            <i class="fas fa-handshake"></i>
+            Disposições Gerais
+        </h2>
+        <div class="terms-content">
+            <ul class="terms-list">
+                <li>Estes termos são regidos pelas leis brasileiras</li>
+                <li>Em caso de conflito, buscaremos resolução amigável</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %} 

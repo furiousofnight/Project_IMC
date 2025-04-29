@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <header>
+        <img src="/static/img/logo.png" alt="Logo FURIOUSOFNIGHT" style="width: 150px; display: block; margin: 0 auto;">
+        <h1>Análise de Progresso</h1>
+    </header>
+
+    <div class="analysis-container">
+        <div class="summary-box">
+            <h2>Resumo do Progresso</h2>
+            <p><strong>Dias Registrados:</strong> {{ dias_registrados }}</p>
+            <p><strong>Tendência de Peso:</strong> 
+                {% if tendencia_peso == "diminuindo" %}
+                    <span class="trend-down">↓ Diminuindo ({{ variacao_peso }}kg)</span>
+                {% elif tendencia_peso == "aumentando" %}
+                    <span class="trend-up">↑ Aumentando ({{ variacao_peso }}kg)</span>
+                {% else %}
+                    <span class="trend-stable">→ Mantendo</span>
+                {% endif %}
+            </p>
+        </div>
+
+        <div class="history-table">
+            <h3>Histórico Detalhado</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Peso (kg)</th>
+                        <th>IMC</th>
+                        <th>Categoria</th>
+                        <th>Gordura Corporal (%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for registro in historico|reverse %}
+                    <tr>
+                        <td>{{ registro.data }}</td>
+                        <td>{{ registro.peso }}</td>
+                        <td>{{ registro.imc }}</td>
+                        <td>{{ registro.categoria }}</td>
+                        <td>{{ registro.gordura_corporal }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="actions">
+        <form action="/" method="GET" style="display: inline-block;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="btn btn-primary">Novo Cálculo</button>
+        </form>
+    </div>
+</div>
+
+<style>
+.analysis-container {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius-default);
+    padding: 2rem;
+    margin: 2rem 0;
+}
+
+.summary-box {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1.5rem;
+    border-radius: var(--border-radius-default);
+    margin-bottom: 2rem;
+}
+
+.history-table {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+th, td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+th {
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--color-primary);
+}
+
+.trend-down {
+    color: #4CAF50;
+}
+
+.trend-up {
+    color: #f44336;
+}
+
+.trend-stable {
+    color: #FFC107;
+}
+
+.actions {
+    text-align: center;
+    margin-top: 2rem;
+}
+</style>
+{% endblock %} 

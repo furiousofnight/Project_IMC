@@ -1,239 +1,228 @@
-#📝 Calculadora de IMC com Flask
+# 🔥 FURIOUSOFNIGHT SUPER PERFORMANCE
 
-Este é um aplicativo simples e interativo para calcular o Índice de Massa Corporal (**IMC**) de usuários, desenvolvido com a biblioteca Flask. Ele permite que o usuário insira seu peso e altura e, com base nesses dados, exibe o valor do IMC, a categoria correspondente e recomendações personalizadas (alimentação, exercícios e cuidados médicos).
+<div align="center">
 
-O propósito deste projeto é servir como um exemplo prático para aprender Flask ou ser potencialmente expandido para aplicações maiores.
+![Logo FURIOUSOFNIGHT](static/img/logo.png)
 
----
+Uma calculadora de IMC de última geração com análise corporal avançada e interface cyberpunk.
 
-##📋 Funcionalidades
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python)](https://www.python.org/)
+[![Flask](https://img.shields.io/badge/Flask-2.0%2B-green?style=for-the-badge&logo=flask)](https://flask.palletsprojects.com/)
+[![SQLite](https://img.shields.io/badge/SQLite-3-blue?style=for-the-badge&logo=sqlite)](https://www.sqlite.org/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow?style=for-the-badge&logo=javascript)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![License](https://img.shields.io/badge/License-MIT-red?style=for-the-badge)](LICENSE)
+[![TikTok](https://img.shields.io/badge/TikTok-Follow-black?style=for-the-badge&logo=tiktok)](https://www.tiktok.com/@furiousofnightgames)
 
-- Exibe um formulário para inserção de **nome**, **peso** e **altura**.
-- Calcula o Índice de Massa Corporal (IMC) do usuário.
-- Classifica o resultado do IMC em diferentes categorias:
-  - Abaixo do peso
-  - Peso ideal
-  - Sobrepeso
-  - Obesidade Grau I, II ou Mórbida.
-- Exibe recomendações detalhadas de:
-  - Alimentação.
-  - Atividades físicas adequadas.
-  - Cuidados médicos sugeridos.
-- Armazena o histórico de cálculos do usuário na sessão do navegador.
-- Validação de entradas garantindo que sejam dentro de intervalos plausíveis para peso e altura.
+[Funcionalidades](#-funcionalidades) • 
+[Demonstração](#-demonstração) • 
+[Instalação](#%EF%B8%8F-instalação) • 
+[Tecnologias](#-tecnologias) • 
+[Arquitetura](#-arquitetura) • 
+[Segurança](#-segurança) • 
+[Contribuindo](#-contribuindo)
 
----
+</div>
 
-## 🎯 Índice de Massa Corporal
+## 📋 Sobre o Projeto
 
-O **IMC** é calculado utilizando a fórmula:
+O FURIOUSOFNIGHT SUPER PERFORMANCE é uma aplicação web moderna para análise corporal completa, oferecendo muito mais que um simples cálculo de IMC. Com uma interface cyberpunk impressionante e recursos avançados de análise, a aplicação fornece recomendações personalizadas baseadas em dados científicos.
 
-```
-IMC = peso (kg) / altura² (m²)
-```
+### ✨ Funcionalidades
 
+#### Análise Corporal Avançada
+- 📊 Cálculo preciso de IMC com classificação detalhada
+- 🎯 Análise de composição corporal (massa magra e gordura)
+- 💪 Cálculo de massa muscular estimada
+- 🔥 Estimativa de gasto calórico basal e total
 
-As categorias e faixas disponíveis no aplicativo são:
-| **Faixa de IMC** | **Classificação**           |
-|-------------------|-----------------------------|
-| Menor que 18.5    | Abaixo do Peso             |
-| Entre 18.5 e 24.9 | Peso Ideal                 |
-| Entre 25 e 29.9   | Sobrepeso                  |
-| Entre 30 e 34.9   | Obesidade Grau I           |
-| Entre 35 e 39.9   | Obesidade Grau II          |
-| Maior que 40      | Obesidade Mórbida          |
+#### Recomendações Personalizadas
+- 🥗 Planos nutricionais básicos adaptados ao perfil
+- 💪 Sugestões de exercícios baseados na condição física
+- 💧 Cálculo de hidratação diária recomendada
+- ⚡ Dicas de suplementação básica
 
----
+#### Interface Moderna
+- 🎨 Design cyberpunk/neon imersivo
+- 🔊 Sistema de áudio interativo para feedback
+- 📱 Layout totalmente responsivo
+- 🌙 Modo escuro automático
 
-## 🛠️ Tecnologias Utilizadas
+## 🎮 Demonstração
 
-- **[Python](https://www.python.org/)**: Linguagem principal para o backend.
-- **[Flask](https://flask.palletsprojects.com/)**: Microframework web utilizado para construir e renderizar o aplicativo.
-- **HTML5** + **CSS3**: Responsáveis pela interface gráfica.
-- **Bootstrap (opcional)**: Pode ser integrado no futuro para melhorar a responsividade (atualmente não utilizado).
-- **JavaScript (opcional)**: Extensões simples ou futuras melhorias.
+<div align="center">
 
----
+![Demo da Aplicação](static/img/demo.gif)
 
-## 📁 Estrutura do Projeto
+[Acesse a Demo Online](https://super-performance.fly.dev)
 
-Um guia rápido para os arquivos e diretórios do projeto:
+</div>
 
-```
-/Project_IMC              # Diretório raiz do projeto
-├── /templates            # Diretório para templates HTML
-│   ├── index.html        # Página inicial do app (formulário de entrada)
-│   └── resultado.html    # Página de resultado do cálculo de IMC
-├── /static               # Diretório para arquivos estáticos
-│   ├── /css
-│   │   └── styles.css    # Estilização do app
-│   ├── /js
-│   │   └── scripts.js    # Scripts futuros (opcional)
-│   └── /img              # Imagens do app (opcional)
-├── app.py                # Arquivo principal do aplicativo Flask
-├── requirements.txt      # Lista de dependências do projeto
-└── README.md             # Documentação completa do projeto
-```
+## 🛠️ Tecnologias
 
+### Backend
+- **Python 3.8+** - Linguagem principal
+- **Flask** - Framework web
+- **SQLite** - Banco de dados
+- **Flask-WTF** - Segurança de formulários
+- **Flask-Limiter** - Controle de taxa de requisições
+- **Flask-Talisman** - Segurança HTTPS
 
----
+### Frontend
+- **HTML5/CSS3** - Estrutura e estilização
+- **JavaScript (ES6+)** - Interatividade
+- **Web Audio API** - Sistema de áudio
+- **LocalStorage API** - Armazenamento local
 
-## 🚀 Guia de Instalação
+### Segurança
+- **CSRF Protection** - Proteção contra ataques CSRF
+- **Rate Limiting** - Prevenção de abusos
+- **Input Sanitization** - Proteção contra XSS
+- **Content Security Policy** - Segurança de conteúdo
+- **HTTPS Enforcement** - Criptografia de dados
 
-Siga os passos abaixo para rodar o projeto localmente.
+## ⚙️ Instalação
 
 ### Pré-requisitos
+- Python 3.8 ou superior
+- pip (gerenciador de pacotes Python)
+- Git
 
-- Python 3.7+ instalado ([download aqui](https://www.python.org/downloads/)).
-- Ferramenta Git ou client GitHub para clonar o repositório (opcional).
+### Passo a Passo
 
----
-
-### Clonar o Repositório
-
-Se você ainda não baixou o projeto, clone-o a partir do GitHub:
-
-```shell script
-git clone https://github.com/seu-usuario/nome-do-repositorio.git
-cd nome-do-repositorio
+1. Clone o repositório
+```bash
+git clone https://github.com/seu-usuario/furiousofnight-super-performance.git
+cd furiousofnight-super-performance
 ```
 
-
----
-
-### Configurar o Ambiente Virtual (Recomendado)
-
-1. Crie um ambiente virtual:
-```shell script
+2. Configure o ambiente virtual
+```bash
 python -m venv venv
-```
-
-
-2. Ative o ambiente virtual:
-   - **Linux/Mac**:
-```shell script
+# Windows
+venv\Scripts\activate
+# Linux/Mac
 source venv/bin/activate
 ```
 
-   - **Windows**:
-```shell script
-venv\Scripts\activate
-```
-
-
----
-
-### Instalar as Dependências
-
-Instale os pacotes necessários para rodar o aplicativo:
-
-```shell script
+3. Instale as dependências
+```bash
 pip install -r requirements.txt
 ```
 
+4. Configure o ambiente
+```bash
+# Copie o arquivo de exemplo
+cp .env.example .env
+# Edite o arquivo .env com suas configurações
+```
+
+5. Inicialize o banco de dados
+```bash
+flask db upgrade
+```
+
+6. Execute a aplicação
+```bash
+flask run
+```
+
+## 📐 Arquitetura
+
+```
+furiousofnight-super-performance/
+├── app/
+│   ├── models/         # Modelos de dados
+│   ├── controllers/    # Controladores
+│   ├── services/       # Lógica de negócios
+│   └── utils/         # Utilitários
+├── static/
+│   ├── css/           # Estilos
+│   ├── js/            # Scripts
+│   ├── audio/         # Arquivos de áudio
+│   └── img/           # Imagens
+├── templates/         # Templates HTML
+├── tests/            # Testes unitários
+└── docs/             # Documentação
+```
+
+## 🔒 Segurança
+
+### Proteções Implementadas
+- ✅ Sanitização de inputs
+- ✅ Proteção CSRF
+- ✅ Rate limiting
+- ✅ Headers de segurança
+- ✅ HTTPS forçado
+- ✅ CSP configurado
+
+### Boas Práticas
+- 🔐 Sem armazenamento de dados sensíveis
+- 🔒 Sessões seguras
+- 🛡️ Validação de dados
+- 📝 Logs de segurança
+
+## 🚀 Deploy
+
+### Requisitos de Produção
+1. Servidor com Python 3.8+
+2. Servidor WSGI (Gunicorn recomendado)
+3. Proxy reverso (Nginx recomendado)
+4. Certificado SSL/TLS
+
+### Configuração de Produção
+```bash
+# Variáveis de ambiente necessárias
+FLASK_ENV=production
+FLASK_APP=run.py
+SECRET_KEY=sua-chave-secreta
+DATABASE_URL=sqlite:///production.db
+```
+
+## 📈 Performance
+
+- ⚡ Tempo de resposta médio: <100ms
+- 🔄 Cache implementado
+- 📦 Assets minificados
+- 🖼️ Imagens otimizadas
+
+## 🤝 Contribuindo
+
+1. Fork o projeto
+2. Crie sua Feature Branch
+```bash
+git checkout -b feature/AmazingFeature
+```
+3. Commit suas mudanças
+```bash
+git commit -m 'Add: nova funcionalidade incrível'
+```
+4. Push para a Branch
+```bash
+git push origin feature/AmazingFeature
+```
+5. Abra um Pull Request
+
+### Guia de Contribuição
+- 📝 Siga o padrão de commits
+- ✅ Adicione testes para novas funcionalidades
+- 📚 Atualize a documentação
+- 🎨 Siga o guia de estilo de código
+
+## 👤 Autor
+
+**FURIOUSOFNIGHT**
+
+- 🎮 TikTok: [@furiousofnightgames](https://www.tiktok.com/@furiousofnightgames)
+- 💻 GitHub: [@seu-usuario](https://github.com/seu-usuario)
+
+## 📝 Licença
+
+Este projeto está sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
 
 ---
 
-### Executar o Projeto
+<div align="center">
 
-Inicie o servidor Flask:
+Feito com 🖤 por [FURIOUSOFNIGHT](https://www.tiktok.com/@furiousofnightgames)
 
-```shell script
-python app.py
-```
-
-
-O aplicativo estará disponível no navegador na URL:
-
-```
-http://127.0.0.1:5000
-```
-
-
----
-
-### Dependências (requirements.txt)
-
-Atualmente, o projeto depende do Flask. Certifique-se de que ele está listado no arquivo **`requirements.txt`**:
-
-```
-Flask==2.3.2
-```
-
-
----
-
-## 🧩 Como Usar
-
-1. Acesse a página inicial: `http://127.0.0.1:5000`.
-2. Preencha o formulário com seu **nome**, **peso** (em kg) e **altura** (em metros).
-3. Clique no botão "Calcular IMC".
-4. Veja o resultado do cálculo, incluindo:
-   - Mensagem saudando o usuário com o valor do IMC calculado.
-   - Categoria do IMC.
-   - Recomendações personalizadas para saúde, alimentação e cuidados médicos.
-5. O aplicativo mostrará, na página inicial, um **histórico de cálculos** da sessão atual.
-
----
-
-## 📚 Exemplos de Uso
-
-### Exemplo 1 - João:
-- Nome: João
-- Peso: **72 kg**
-- Altura: **1.75 m**
-
-**Resultado**:
-- IMC: 23.5
-- Categoria: Peso Ideal
-- Recomendações: Continue com alimentação balanceada e práticas regulares de exercícios leves.
-
-### Exemplo 2 - Maria:
-- Nome: Maria
-- Peso: **95 kg**
-- Altura: **1.65 m**
-
-**Resultado**:
-- IMC: 34.9
-- Categoria: Obesidade Grau I
-- Recomendações: Consulte um endocrinologista para estratégias de perda de peso e priorize vegetais e atividades de baixo impacto.
-
----
-
-## 👥 Contribuição
-
-Contribuições são bem-vindas! Siga os passos abaixo:
-
-- Faça um fork do repositório.
-- Crie uma branch para suas alterações:
-```shell script
-git checkout -b feature/nova-funcionalidade
-```
-
-- Faça commit das alterações:
-```shell script
-git commit -m 'Adicionei uma nova funcionalidade'
-```
-
-- Suba as alterações para sua branch:
-```shell script
-git push origin feature/nova-funcionalidade
-```
-
-- Abra um **pull request** explicando as mudanças realizadas.
-
----
-
-## 🛡️ Licença
-
-Este projeto está licenciado sob a Licença MIT - veja o arquivo **LICENSE** para detalhes.
-
----
-
-## 📞 Suporte
-
-Se você encontrar algum problema ou tiver dúvidas, abra uma [Issue](https://github.com/seu-usuario/nome-do-repositorio/issues) no GitHub.
-
----
-
-Agora você pode copiar o README acima e colá-lo diretamente no seu arquivo **`README.md`** do repositório no GitHub!😊
+</div>

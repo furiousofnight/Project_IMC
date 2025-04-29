@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1e1e3c">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    
+    <title>{% block title %}SUPER PERFORMANCE{% endblock %}</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --cyber-yellow: #FFE742;
+            --electric-blue: #4F46E5;
+            --neon-pink: #FF1B6B;
+            --dark-bg: rgba(20, 20, 35, 0.95);
+        }
+
+        body {
+            background-color: #121212;
+            color: var(--cyber-yellow);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+        }
+
+        .custom-form {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .custom-input,
+        input[type="text"],
+        input[type="number"],
+        select {
+            background-color: var(--dark-bg) !important;
+            color: var(--cyber-yellow) !important;
+            border: 2px solid var(--electric-blue) !important;
+            border-radius: 8px !important;
+            padding: 0.75rem !important;
+            width: 100% !important;
+            font-size: 1rem !important;
+            transition: all 0.3s ease !important;
+            box-shadow: inset 0 0 1000px var(--dark-bg) !important;
+            -webkit-text-fill-color: var(--cyber-yellow) !important;
+            caret-color: var(--cyber-yellow) !important;
+            background-clip: content-box !important;
+        }
+
+        @media (max-width: 768px) {
+            .custom-input,
+            input[type="text"],
+            input[type="number"],
+            select {
+                padding: 0.5rem !important;
+                font-size: 16px !important; /* Previne zoom em iOS */
+            }
+        }
+
+        .custom-input:focus,
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            outline: none !important;
+            border-color: var(--neon-pink) !important;
+            box-shadow: 0 0 10px var(--neon-pink), inset 0 0 1000px var(--dark-bg) !important;
+        }
+
+        .custom-input::placeholder {
+            color: rgba(255, 231, 66, 0.5) !important;
+            opacity: 1 !important;
+        }
+
+        /* Estilos para autofill */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px var(--dark-bg) inset !important;
+            -webkit-text-fill-color: var(--cyber-yellow) !important;
+            caret-color: var(--cyber-yellow) !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+
+        .form-label {
+            color: var(--cyber-yellow);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-label {
+                font-size: 0.9rem;
+            }
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--electric-blue), var(--neon-pink)) !important;
+            border: none !important;
+            border-radius: 8px !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.5px !important;
+            text-transform: uppercase !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 0 15px var(--neon-pink) !important;
+        }
+
+        @media (max-width: 768px) {
+            .btn-primary {
+                padding: 0.6rem 1rem !important;
+                font-size: 0.9rem !important;
+            }
+        }
+
+        /* Estilos para select e suas opções */
+        select {
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            appearance: none !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FFE742' d='M6 8L1 3h10z'/%3E%3C/svg%3E") !important;
+            background-repeat: no-repeat !important;
+            background-position: right 1rem center !important;
+            padding-right: 2.5rem !important;
+        }
+
+        /* Estilização do dropdown do select */
+        select option {
+            background-color: var(--dark-bg) !important;
+            color: var(--cyber-yellow) !important;
+            padding: 1rem !important;
+            font-size: 1rem !important;
+            border-bottom: 1px solid rgba(255, 231, 66, 0.1) !important;
+            transition: all 0.3s ease !important;
+        }
+
+        /* Hover nas opções */
+        select option:hover {
+            background-color: rgba(79, 70, 229, 0.2) !important;
+        }
+
+        /* Opção selecionada */
+        select option:checked {
+            background-color: rgba(79, 70, 229, 0.3) !important;
+            color: var(--neon-pink) !important;
+        }
+
+        /* Ajuste para dispositivos móveis */
+        @media (max-width: 768px) {
+            select option {
+                padding: 0.8rem !important;
+                font-size: 16px !important;
+            }
+        }
+
+        /* Estilo para o select quando aberto */
+        select:focus {
+            border-color: var(--neon-pink) !important;
+            box-shadow: 0 0 15px var(--neon-pink) !important;
+        }
+
+        /* Remover seta padrão do select em diferentes navegadores */
+        select::-ms-expand {
+            display: none !important;
+        }
+
+        /* Estilo para o container do select */
+        .custom-select-container {
+            position: relative !important;
+            width: 100% !important;
+        }
+
+        /* Ajustes para scrollbar dentro do select */
+        select::-webkit-scrollbar {
+            width: 8px !important;
+        }
+
+        select::-webkit-scrollbar-track {
+            background: var(--dark-bg) !important;
+        }
+
+        select::-webkit-scrollbar-thumb {
+            background: var(--electric-blue) !important;
+            border-radius: 4px !important;
+        }
+
+        select::-webkit-scrollbar-thumb:hover {
+            background: var(--neon-pink) !important;
+        }
+
+        /* Ajustes para scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--electric-blue);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--neon-pink);
+        }
+
+        /* Estilos do Footer com cores mais intensas */
+        .footer {
+            background: linear-gradient(135deg, rgba(20, 20, 35, 0.97), rgba(25, 25, 40, 0.97));
+            border-top: 2px solid var(--neon-pink);
+            position: relative;
+            overflow: hidden;
+            padding: 2rem 0;
+            z-index: 10;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent,
+                var(--electric-blue),
+                var(--neon-pink),
+                transparent
+            );
+            animation: footerGlow 3s linear infinite;
+            z-index: 11;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 12;
+        }
+
+        .footer-text {
+            color: var(--wolf-fur) !important;
+            font-size: 1.2rem !important;
+            font-weight: 500 !important;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2) !important;
+            letter-spacing: 1px !important;
+            margin-bottom: 1.5rem !important;
+            opacity: 1 !important;
+        }
+
+        .footer-brand {
+            color: var(--cyber-yellow) !important;
+            font-weight: 600 !important;
+            font-size: 1.4rem !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1.5px !important;
+            text-shadow: 0 0 8px rgba(255, 231, 66, 0.5) !important;
+            display: inline-block !important;
+            padding: 0.4rem 1rem !important;
+            background: rgba(30, 30, 47, 0.95) !important;
+            border-radius: 20px !important;
+            border: 2px solid var(--vibrant-purple) !important;
+            transform-style: preserve-3d !important;
+            opacity: 1 !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .footer-brand:hover {
+            transform: translateY(-2px) !important;
+            text-shadow: 0 0 12px rgba(255, 231, 66, 0.7) !important;
+            border-color: var(--electric-blue) !important;
+        }
+
+        .footer-links {
+            margin-top: 1.5rem !important;
+            display: flex !important;
+            justify-content: center !important;
+            gap: 1.5rem !important;
+            flex-wrap: wrap !important;
+        }
+
+        .footer-links a {
+            color: var(--wolf-fur) !important;
+            font-size: 0.9rem !important;
+            font-weight: 500 !important;
+            text-transform: uppercase !important;
+            text-decoration: none !important;
+            padding: 0.6rem 1.2rem !important;
+            border: 1px solid var(--electric-blue) !important;
+            border-radius: 25px !important;
+            background: rgba(0, 204, 255, 0.05) !important;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.2) !important;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+            position: relative !important;
+            overflow: hidden !important;
+            opacity: 1 !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 0.5rem !important;
+        }
+
+        .footer-links a i {
+            font-size: 1rem !important;
+            transition: transform 0.3s ease !important;
+        }
+
+        .footer-links a:hover {
+            color: var(--electric-blue) !important;
+            border-color: var(--electric-blue) !important;
+            background: rgba(0, 204, 255, 0.1) !important;
+            text-shadow: 0 0 8px var(--electric-blue) !important;
+            transform: translateY(-2px) scale(1.05) !important;
+            box-shadow: 0 5px 15px rgba(0, 204, 255, 0.2) !important;
+            letter-spacing: 1px !important;
+        }
+
+        .footer-links a:hover i {
+            transform: scale(1.2) rotate(5deg) !important;
+        }
+
+        .footer-links a::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: -100% !important;
+            width: 100% !important;
+            height: 100% !important;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 204, 255, 0.2),
+                transparent
+            ) !important;
+            transition: 0.5s !important;
+        }
+
+        .footer-links a:hover::before {
+            left: 100% !important;
+        }
+
+        @media (max-width: 768px) {
+            .footer-brand {
+                font-size: 1.2rem !important;
+            }
+            
+            .footer-links {
+                gap: 1rem !important;
+            }
+            
+            .footer-links a {
+                font-size: 0.8rem !important;
+                padding: 0.5rem 1rem !important;
+            }
+        }
+
+        @keyframes footerGlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="custom-theme">
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">
+                Desenvolvido por <span class="footer-brand">FURIOUSOFNIGHT</span>
+            </p>
+            <p class="footer-text">
+                Análise corporal inteligente para sua saúde
+            </p>
+            <div class="footer-links">
+                <a href="{{ url_for('privacidade') }}" title="Política de Privacidade">
+                    <i class="fas fa-shield-alt me-2"></i>Privacidade
+                </a>
+                <a href="{{ url_for('termos') }}" title="Termos de Uso">
+                    <i class="fas fa-file-contract me-2"></i>Termos
+                </a>
+                <a href="https://www.tiktok.com/@furiousofnightgames" target="_blank" title="Siga-nos no TikTok">
+                    <i class="fab fa-tiktok me-2"></i>Contato
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/audio.js') }}"></script>
+    
+    {% block extra_js %}{% endblock %}
+
+    <script>
+        // Força o background escuro nos campos de input
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input[type="text"], input[type="number"], select');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.style.backgroundColor = 'rgba(20, 20, 35, 0.95)';
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
