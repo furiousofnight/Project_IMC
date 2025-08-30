@@ -4,6 +4,8 @@
 
 ![Logo FURIOUSOFNIGHT](static/img/logo.png)
 
+🎯LINK PARA TESTE https://project-imc.fly.dev/ 🎯
+
 Uma calculadora de IMC de última geração com análise corporal avançada e interface cyberpunk.
 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python)](https://www.python.org/)
