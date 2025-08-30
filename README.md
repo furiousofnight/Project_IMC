@@ -55,7 +55,7 @@ O FURIOUSOFNIGHT SUPER PERFORMANCE é uma aplicação web moderna para análise 
 
 ![Demo da Aplicação](static/img/demo.gif)
 
-[Acesse a Demo Online](https://super-performance.fly.dev)
+[Acesse a Demo Online](https://project-imc.fly.dev/)
 
 </div>
 
